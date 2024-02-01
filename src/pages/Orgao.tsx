@@ -2,10 +2,10 @@ import Crud from "@/components/Crud/Crud";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Save } from "lucide-react";
 
 import * as F from '@radix-ui/react-form';
 import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
+import Input from "@/components/Form/Input";
 
 
 type Orgao = {
@@ -32,28 +32,23 @@ function Form() {
   return (
     <F.Root onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-7">
-        <F.Field name="descricao" className="w-3/6 mt-5">
-          <div>
-            <F.Label>Descrição <span className="text-red-500">*</span></F.Label>
-          </div>
-          <F.Control asChild>
-            <input className="border rounded-md p-3 w-full" type="text" {...register("descricao")} />
-          </F.Control>
-          <F.Message className="block">
-            <span className="text-red-500">{errors.descricao && <span>{errors.descricao.message}</span>}</span>
-          </F.Message>
-        </F.Field>
-        <F.Field name="responsavel" className="w-2/6 mt-5">
-          <div>
-            <F.Label>Responsável <span className="text-red-500">*</span></F.Label>
-          </div>
-          <F.Control asChild>
-            <input className="border rounded-md p-3 w-full" type="text" {...register("responsavel")} />
-          </F.Control>
-          <F.Message className="block">
-            <span className="text-red-500">{errors.responsavel && <span>{errors.responsavel.message}</span>}</span>
-          </F.Message>
-        </F.Field>
+        <Input
+         id="descricao"
+         label="Descrição"
+         name="descricao"
+         required={true}
+         autoFocus={true}
+         {...register("descricao")}
+         error={errors.descricao?.message}
+        />
+        <Input
+         id="responsavel"
+         label="Responsável"
+         name="responsavel"
+         autoFocus={true}
+         error={errors.responsavel?.message}
+         {...register("responsavel")}
+        />
       </div>
       <ButtonsCrud />
     </F.Root>
