@@ -1,5 +1,10 @@
 import Crud from "@/components/Crud/Crud";
 
+function Form () {
+  return (
+    <input type="text" placeholder="texto" />
+  )
+}
 export default function OrgaoPage() {
   return (
     <div>
@@ -11,6 +16,7 @@ export default function OrgaoPage() {
           { head: "Responsável", body: "responsavel" },
           { head: "CPF", body: "cpf" }
         ]}
+        form={<Form />}
       />
     </div>
   )
