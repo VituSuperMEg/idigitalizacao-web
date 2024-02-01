@@ -3,7 +3,7 @@ import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 interface InputProps extends InputHTMLAttributes<HTMLInputTypeAttribute> {
   id : string;
   label: string;
-  name: string;
+  name?: string;
   required?: boolean;
   error?: string;
 };
@@ -28,7 +28,6 @@ export default function Input<T>({
         <input
           autoFocus={autoFocus}
           id={id}
-          name={name}
           className="border rounded-md p-3 w-full"
           type="text"
           {...rest}

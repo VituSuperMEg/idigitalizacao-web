@@ -12,7 +12,7 @@ interface ICrud {
   fieldsTable: [
     { head: string, body: string }
   ];
-  form : ReactNode
+  form: ReactNode
 }
 export default function Crud({
   display,
@@ -22,11 +22,10 @@ export default function Crud({
 
   const [view, setView] = useState("list");
 
-  console.log(view);
   return (
     <div>
 
-      <header className="flex items-center justify-between" style={{ marginTop : -70}}>
+      <header className="flex items-center justify-between" style={{ marginTop: -70 }}>
         <div className="flex items-center">
           <h2>{display?.displayName}</h2>
           <ChevronRight />
