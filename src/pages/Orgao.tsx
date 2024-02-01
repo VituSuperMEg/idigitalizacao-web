@@ -5,15 +5,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Save } from "lucide-react";
 
 import * as F from '@radix-ui/react-form';
+import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
 
 
 type Orgao = {
   descricao: string;
-  responsavel : string;
+  responsavel: string;
 }
 const OrgaoSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
-  responsavel : z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
 })
 
 function Form() {
@@ -54,13 +55,7 @@ function Form() {
           </F.Message>
         </F.Field>
       </div>
-      <div className="flex justify-end mt-4">
-        <F.Submit asChild >
-          <button className="bg-emerald-400 p-3 rounded-md text-white w-44">
-            <strong className="flex gap-5"><Save />  Salvar</strong>
-          </button>
-        </F.Submit>
-      </div>
+      <ButtonsCrud />
     </F.Root>
   )
 }
