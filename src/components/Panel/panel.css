@@ -2,6 +2,9 @@
   position: absolute;
   top: 30px;
   left : 200px;
+  position: relative;
+  top: -85px;
+  left : -30px;
   display: flex;
   gap: 0.5em;
 }
