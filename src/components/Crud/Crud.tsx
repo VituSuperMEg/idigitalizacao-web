@@ -31,10 +31,15 @@ export default function Crud({
         <Buttons setView={setView} view={view}/>
       </header> 
       {view === 'list' && (
-        <Table fields={fieldsTable}/>
+        <div className="w-full">
+  <Table fields={fieldsTable} setView={setView}/>
+        </div>
       )}
       {view === "new" && (
         <h1>novo</h1>
+      )}
+        {view === "edit" && (
+        <h1>edit</h1>
       )}
     </div>
   )

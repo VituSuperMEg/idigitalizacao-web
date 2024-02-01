@@ -5,22 +5,23 @@ interface ITable {
   fields: [
     { head: string; body: string }
   ];
+  setView : string;
 }
 
-export default function Table({ fields }: ITable) {
+export default function Table({ fields, setView }: ITable) {
 
   return (
     <div>
-      <table className="table">
+      <table className="w-full mt-6 table">
         <thead>
           {fields.map((i) => (
-            <th className="text-zinc-500 ">{i.head}</th>
+            <th className="text-zinc-500 head">{i.head}</th>
           ))}
           <th className="text-zinc-500 float-right mr-8">Ações</th>
         </thead>
         <tbody>
           {orgaos &&
-            orgaos.map((item, index) => (
+            orgaos.map((item: any, index) => (
               <tr key={index}>
                 {fields.map((i) => (
                   <td key={i.body}>
@@ -29,7 +30,7 @@ export default function Table({ fields }: ITable) {
                 ))}
                 <div className="flex float-right gap-2">
                   <td
-                    className="bg-slate-400 mt-2"
+                    className="bg-slate-400 mt-2 mb-2"
                     style={{
                       width: "50px",
                       height: "50px",
@@ -43,7 +44,7 @@ export default function Table({ fields }: ITable) {
                       color="#fff"
                       className="cursor-pointer"
                       onClick={() => {
-                        // handleViewCrud("edit");
+                        setView("edit");
                         // onEditId(item.id);
                       }}
                     />

@@ -13,7 +13,7 @@ export default function Buttons({ view = 'list', setView }: Button) {
          onClick={() => setView('new')}
         ><Plus /> Novo </button>
       )}
-      {view === "new" && (
+      {view === "new" || view === "edit" && (
          <button 
          className="bg-slate-400 flex gap-2 p-3 rounded-lg text-white"
          onClick={() => setView('list')}
