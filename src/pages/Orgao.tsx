@@ -17,9 +17,9 @@ type Orgao = {
 }
 
 const OrgaoSchema = z.object({
-  descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
-  responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
-  cpf: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  // descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
+  // responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  // cpf: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
 });
 
 function Form() {
@@ -35,45 +35,46 @@ function Form() {
     console.log(values)
   }
   return (
-    <F.Root onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex gap-7">
-        <Input
-          id="descricao"
-          label="Descrição"
-          required={true}
-          autoFocus={true}
-          {...register("descricao")}
-          error={errors.descricao?.message}
-        />
-        <Input
-          id="responsavel"
-          label="Responsável"
-          error={errors.responsavel?.message}
-          {...register("responsavel")}
-        />
-      </div>
-      <div className="flex gap-3">
-        <Input
-          id="cpf"
-          label="CPF"
-          {...register("cpf")}
-          error={errors.responsavel?.message}
-        />
-        <Input
-          id="num_expediente"
-          label="Num_expediente"
-          {...register("num_expediente")}
-          error={errors.responsavel?.message}
-        />
-        <Input
-          id="cpf"
-          label="CPF"
-          {...register("cpf")}
-          error={errors.responsavel?.message}
-        />
-      </div>
-      <ButtonsCrud />
-    </F.Root>
+    <></>
+    // <F.Root onSubmit={handleSubmit(onSubmit)}>
+    //   <div className="flex gap-7">
+    //     <F.Field className="FormField" name="email">
+    //       <div>
+    //         <F.Label>Email</F.Label>
+    //       </div>
+    //       <F.Control asChild>
+    //         <input  {...register("descricao")}/>
+    //       </F.Control>
+    //     </F.Field>
+    //     <Input
+    //       id="responsavel"
+    //       label="Responsável"
+    //       error={errors.responsavel?.message}
+    //       {...register("responsavel")}
+    //     />
+    //   </div>
+    //   <div className="flex gap-3">
+    //     <Input
+    //       id="cpf"
+    //       label="CPF"
+    //       {...register("cpf")}
+    //       error={errors.responsavel?.message}
+    //     />
+    //     <Input
+    //       id="num_expediente"
+    //       label="Num_expediente"
+    //       {...register("num_expediente")}
+    //       error={errors.responsavel?.message}
+    //     />
+    //     <Input
+    //       id="cpf"
+    //       label="CPF"
+    //       {...register("cpf")}
+    //       error={errors.responsavel?.message}
+    //     />
+    //   </div>
+    //   <button type="submit">oii</button>
+    // </F.Root>
   )
 }
 export default function OrgaoPage() {
