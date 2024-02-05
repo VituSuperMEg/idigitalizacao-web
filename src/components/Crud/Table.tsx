@@ -1,7 +1,7 @@
-import { orgaos } from "@/mocks/mocks";
-import { api } from "@/services/api";
+import { api, del } from "@/services/api";
 import { Pencil, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
+import { confirmationDeleteReturn } from 'message-next';
 
 interface ITable {
   fields: [
@@ -19,6 +19,15 @@ export default function Table({ fields, setView, endPoint }: ITable) {
     const list = await api.get(`${endPoint}`);
     setData(list.data.data);
   }
+
+  async function remove(id: number) {
+    const check = await confirmationDeleteReturn("Deseja realmente excluir este registro!");
+    if(check) {
+      await del({ endPoint: endPoint, id : id});
+      getList();
+    }
+  } 
+
   useEffect(() => {
     getList();
   }, []);
@@ -77,7 +86,7 @@ export default function Table({ fields, setView, endPoint }: ITable) {
                       color="#fff"
                       className="cursor-pointer"
                       onClick={() => {
-                        // handleRemove(item.id);
+                        remove(item.id)
                       }}
                     />
                   </td>
