@@ -6,7 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as F from '@radix-ui/react-form';
 import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
 import Input from "@/components/Form/Input";
+import { api, submit } from "@/services/api";
 
+import { toast } from 'react-toastify';
 
 type Orgao = {
   descricao: string;
@@ -17,9 +19,10 @@ type Orgao = {
 }
 
 const OrgaoSchema = z.object({
-  // descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
-  // responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
-  // cpf: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
+  responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  cpf: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
+  num_expediente: z.string().nonempty().max(15)
 });
 
 function Form() {
@@ -31,50 +34,22 @@ function Form() {
     resolver: zodResolver(OrgaoSchema)
   });
 
-  function onSubmit(values: any) {
-    console.log(values)
+  async function onSubmit(values: any) {
+    await submit({ endPoint: "/orgaos", values: {
+      descricao: values.descricao,
+      responsavel: values.responsavel,
+      cpf: values.cpf,
+      num_expediente: values.num_expediente
+    }});
   }
   return (
-    <></>
-    // <F.Root onSubmit={handleSubmit(onSubmit)}>
-    //   <div className="flex gap-7">
-    //     <F.Field className="FormField" name="email">
-    //       <div>
-    //         <F.Label>Email</F.Label>
-    //       </div>
-    //       <F.Control asChild>
-    //         <input  {...register("descricao")}/>
-    //       </F.Control>
-    //     </F.Field>
-    //     <Input
-    //       id="responsavel"
-    //       label="Responsável"
-    //       error={errors.responsavel?.message}
-    //       {...register("responsavel")}
-    //     />
-    //   </div>
-    //   <div className="flex gap-3">
-    //     <Input
-    //       id="cpf"
-    //       label="CPF"
-    //       {...register("cpf")}
-    //       error={errors.responsavel?.message}
-    //     />
-    //     <Input
-    //       id="num_expediente"
-    //       label="Num_expediente"
-    //       {...register("num_expediente")}
-    //       error={errors.responsavel?.message}
-    //     />
-    //     <Input
-    //       id="cpf"
-    //       label="CPF"
-    //       {...register("cpf")}
-    //       error={errors.responsavel?.message}
-    //     />
-    //   </div>
-    //   <button type="submit">oii</button>
-    // </F.Root>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="text" {...register("descricao")} placeholder="descrição" />
+      <input type="text" {...register("responsavel")} placeholder="responsavel" />
+      <input type="text" {...register("cpf")} placeholder="cpf" />
+      <input type="text" {...register("num_expediente")} placeholder="num_expediente" />
+      <ButtonsCrud />
+    </form>
   )
 }
 export default function OrgaoPage() {
@@ -82,9 +57,10 @@ export default function OrgaoPage() {
     <div>
       <Crud
         display={{ displayName: "Orgão", displayMenu: "Cadastro" }}
+        endPoint="orgaos"
         fieldsTable={[
-          { head: "Código", body: "codigo" },
-          { head: "Nome", body: "nome" },
+          { head: "Código", body: "id" },
+          { head: "Nome", body: "descricao" },
           { head: "Responsável", body: "responsavel" },
           { head: "CPF", body: "cpf" }
         ]}

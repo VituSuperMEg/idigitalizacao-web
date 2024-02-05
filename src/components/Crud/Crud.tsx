@@ -12,12 +12,14 @@ interface ICrud {
   fieldsTable: [
     { head: string, body: string }
   ];
-  form: ReactNode
+  form: ReactNode;
+  endPoint: string
 }
 export default function Crud({
   display,
   fieldsTable,
-  form
+  form,
+  endPoint
 }: ICrud) {
 
   const [view, setView] = useState("list");
@@ -36,7 +38,7 @@ export default function Crud({
 
       {view === 'list' && (
         <div className="w-full">
-          <Table fields={fieldsTable} setView={setView} />
+          <Table fields={fieldsTable} setView={setView} endPoint={endPoint}/>
         </div>
       )}
       {view === "new" && (

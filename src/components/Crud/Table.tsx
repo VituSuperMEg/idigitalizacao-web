@@ -1,27 +1,40 @@
 import { orgaos } from "@/mocks/mocks";
+import { api } from "@/services/api";
 import { Pencil, Trash } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ITable {
   fields: [
     { head: string; body: string }
   ];
   setView : string;
+  endPoint: string;
 }
 
-export default function Table({ fields, setView }: ITable) {
+export default function Table({ fields, setView, endPoint }: ITable) {
+ 
+  const [data, setData] = useState<any[]>([]);
+
+  async function getList() {
+    const list = await api.get(`${endPoint}`);
+    setData(list.data.data);
+  }
+  useEffect(() => {
+    getList();
+  }, []);
 
   return (
     <div>
       <table className="w-full mt-6 table">
         <thead>
           {fields.map((i) => (
-            <th className="text-zinc-500 head">{i.head}</th>
+            <th className="text-zinc-500 head"  key={i.head}>{i.head}</th>
           ))}
           <th className="text-zinc-500 float-right mr-8">Ações</th>
         </thead>
         <tbody>
-          {orgaos &&
-            orgaos.map((item: any, index) => (
+          {data &&
+            data.map((item: any, index) => (
               <tr key={index}>
                 {fields.map((i) => (
                   <td key={i.body}>
@@ -36,7 +49,7 @@ export default function Table({ fields, setView }: ITable) {
                       height: "50px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
+                       justifyContent: "center",
                       borderRadius: "50%",
                     }}
                   >
