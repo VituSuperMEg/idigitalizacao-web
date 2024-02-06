@@ -5,6 +5,7 @@ import Table from "./Table";
 import Buttons from "./Buttons";
 
 import './crud.css';
+import { useCrud } from "@/store/crud";
 
 interface ICrud {
   display: {
@@ -16,24 +17,15 @@ interface ICrud {
   ];
   form: ReactNode;
   endPoint: string;
-  setIdForm: number;
-  type: any;
-  Schema : any;
 }
 export default function Crud({
   display,
   fieldsTable,
   form,
   endPoint,
-  setIdForm,
-  type,
-  Schema
-}: ICrud) {
+}: ICrud) { 
 
-  const [view, setView] = useState("list");
-  const [id, setId] = useState(0);
-  const [editData, setEditData] = useState<any>(null);
-
+  const view = useCrud(state => state.view);
   return (
     <div>
       <header className="flex items-center justify-between" style={{ marginTop: -70 }}>
@@ -42,15 +34,13 @@ export default function Crud({
           <ChevronRight />
           <h2>{display?.displayMenu}</h2>
         </div>
-        <Buttons setView={setView} view={view} />
+        <Buttons />
       </header>
       <If test={view === "list"}>
         <div className="w-full">
           <Table 
             fields={fieldsTable} 
-            setView={setView} 
             endPoint={endPoint}
-            setId={setId} 
           />
         </div>
       </If>

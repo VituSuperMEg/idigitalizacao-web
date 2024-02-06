@@ -1,10 +1,14 @@
+import { useCrud } from "@/store/crud";
 import { ArrowLeft, CreativeCommons, Plus } from "lucide-react";
 
 type Button = {
   view: string;
   setView: any;
 }
-export default function Buttons({ view = 'list', setView }: Button) {
+export default function Buttons() {
+
+  const view = useCrud(state => state.view);
+  const setView = useCrud(state => state.setView);
   return (
     <div>
       {view === 'list' && (

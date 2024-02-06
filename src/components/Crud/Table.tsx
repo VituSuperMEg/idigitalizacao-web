@@ -7,14 +7,15 @@ import { useCrud } from "@/store/crud";
 
 interface ITable {
   fields: [{ head: string; body: string }];
-  setView: any;
   endPoint: string;
-  onEditId : (id : number) => number;
 }
-export default function Table({ fields, setView, endPoint }: ITable) {
+export default function Table({ fields, endPoint }: ITable) {
 
   const [data, setData] = useState<any[]>([]);
+
+  // zustand 
   const setId = useCrud(state => state.setId);
+  const setView = useCrud(state => state.setView);
 
   async function getList() {
     const list = await api.get(`${endPoint}`);

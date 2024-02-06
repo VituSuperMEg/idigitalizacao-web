@@ -35,12 +35,11 @@ function Form() {
    
   const id = useCrud(state => state.id);
   const view = useCrud(state => state.view);
-
+  console.log(view)
   async function fillFormFields() {
     try {
       const response = await api.get(`/orgaos/${id}`);
       const data = response.data.data[0]; 
-      console.log(data)
       Object.keys(data).forEach((key : keyof Orgao) => {
         setValue(key, data[key]);
       });
