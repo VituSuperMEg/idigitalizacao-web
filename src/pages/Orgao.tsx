@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
-import { submit } from "@/services/api";
+import { api, submit } from "@/services/api";
+import { useEffect, useState } from "react";
+import { useCrud } from "@/store/crud";
 
 
 type Orgao = {
@@ -25,10 +27,31 @@ function Form() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<Orgao>({
     resolver: zodResolver(OrgaoSchema)
   });
+   
+  const id = useCrud(state => state.id);
+  const view = useCrud(state => state.view);
+
+  async function fillFormFields() {
+    try {
+      const response = await api.get(`/orgaos/${id}`);
+      const data = response.data.data[0]; 
+      console.log(data)
+      Object.keys(data).forEach((key : keyof Orgao) => {
+        setValue(key, data[key]);
+      });
+    } catch (error) {
+      console.error("Erro ao preencher os campos do formulário:", error);
+    }
+  }
+  
+  useEffect(() => {
+    fillFormFields();
+  }, []);
 
   async function onSubmit(values: any) {
     await submit({
@@ -51,9 +74,12 @@ function Form() {
   )
 }
 export default function OrgaoPage() {
+  
+  const [id, setId] = useState(0);
   return (
     <div>
       <Crud
+        Schema={OrgaoSchema}
         display={{ displayName: "Orgão", displayMenu: "Cadastro" }}
         endPoint="orgaos"
         fieldsTable={[

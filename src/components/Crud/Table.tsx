@@ -3,16 +3,18 @@ import { Pencil, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { confirmationDeleteReturn } from 'message-next';
 import ToolTip from "../Tooltip/Tooltip";
+import { useCrud } from "@/store/crud";
 
 interface ITable {
   fields: [{ head: string; body: string }];
   setView: any;
   endPoint: string;
-  onEditId : number;
+  onEditId : (id : number) => number;
 }
-export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
+export default function Table({ fields, setView, endPoint }: ITable) {
 
   const [data, setData] = useState<any[]>([]);
+  const setId = useCrud(state => state.setId);
 
   async function getList() {
     const list = await api.get(`${endPoint}`);
@@ -30,7 +32,10 @@ export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
   useEffect(() => {
     getList();
   }, []);
-
+  
+  function handleId(id : number) {
+    setId(id)
+  }
   return (
     <div>
       <table className="w-full mt-6 table">
@@ -49,7 +54,7 @@ export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
                     {item[i.body]}
                   </td>
                 ))}
-                <div className="flex float-right gap-2">
+                <div className="flex float-right gap-2 items-center">
                   <ToolTip
                     element={
                       <td
@@ -68,7 +73,7 @@ export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
                           className="cursor-pointer"
                           onClick={() => {
                             setView("edit");
-                            onEditId(item.id);
+                            handleId(item.id);
                           }}
                         />
                       </td>
@@ -78,7 +83,7 @@ export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
                   <ToolTip
                     element={
                     <td
-                      className="bg-red-500 mt-2"
+                      className="bg-red-500"
                       style={{
                         width: "50px",
                         height: "50px",
