@@ -31,19 +31,21 @@ function Form() {
   });
 
   async function onSubmit(values: any) {
-    await submit({ endPoint: "/orgaos", values: {
-      descricao: values.descricao,
-      responsavel: values.responsavel,
-      cpf: values.cpf,
-      num_expediente: values.num_expediente
-    }});
+    await submit({
+      endPoint: "/orgaos", values: {
+        descricao: values.descricao,
+        responsavel: values.responsavel,
+        cpf: values.cpf,
+        num_expediente: values.num_expediente
+      }
+    });
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
-      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("descricao")} placeholder="Descrição" />
-      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("responsavel")} placeholder="Responsável" />
-      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("cpf")} placeholder="CPF" />
-      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("num_expediente")} placeholder="Num_expediente" />
+      <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("descricao")} placeholder="Descrição" />
+      <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("responsavel")} placeholder="Responsável" />
+      <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cpf")} placeholder="CPF" />
+      <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("num_expediente")} placeholder="Num_expediente" />
       <ButtonsCrud btnNew={false} />
     </form>
   )

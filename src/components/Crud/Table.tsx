@@ -5,16 +5,12 @@ import { confirmationDeleteReturn } from 'message-next';
 import ToolTip from "../Tooltip/Tooltip";
 
 interface ITable {
-  fields: [
-    { head: string; body: string }
-  ];
-  setView: string;
+  fields: [{ head: string; body: string }];
+  setView: any;
   endPoint: string;
+  onEditId : number;
 }
-
-
-
-export default function Table({ fields, setView, endPoint }: ITable) {
+export default function Table({ fields, setView, endPoint, onEditId}: ITable) {
 
   const [data, setData] = useState<any[]>([]);
 
@@ -72,7 +68,7 @@ export default function Table({ fields, setView, endPoint }: ITable) {
                           className="cursor-pointer"
                           onClick={() => {
                             setView("edit");
-                            // onEditId(item.id);
+                            onEditId(item.id);
                           }}
                         />
                       </td>
@@ -108,6 +104,5 @@ export default function Table({ fields, setView, endPoint }: ITable) {
         </tbody>
       </table>
     </div>
-
   );
 }
