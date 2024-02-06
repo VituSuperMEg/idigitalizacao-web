@@ -1,5 +1,5 @@
 import { useCrud } from "@/store/crud";
-import { ArrowLeft, CreativeCommons, Plus } from "lucide-react";
+import { ArrowLeft, CreativeCommons, Plus, Search } from "lucide-react";
 
 type Button = {
   view: string;
@@ -21,7 +21,7 @@ export default function Buttons() {
          <button 
          className="bg-slate-400 flex gap-2 p-3 rounded-lg text-white"
          onClick={() => setView('list')}
-        ><ArrowLeft /> Voltar </button>
+        ><Search /> Buscar </button>
       )}
     </div>
   )
