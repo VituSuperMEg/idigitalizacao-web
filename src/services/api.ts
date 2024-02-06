@@ -19,7 +19,7 @@ export const submit = async ({ endPoint, values }: HTTP) => {
     }
   } catch (err) {
     const axiosError = err as AxiosError;
-    error(axiosError.response.data.error, "ERROR");
+    error(axiosError.response.data.error, "Erro");
   }
 }
 export const del = async ({endPoint, id}:HTTP) => {
@@ -30,6 +30,6 @@ export const del = async ({endPoint, id}:HTTP) => {
     }
   }catch(err) {
     const axiosError = err as AxiosError;
-    error(axiosError.response.data.error, "ERROR");
+    error(axiosError.response.data.error, "Erro");
   }
 }

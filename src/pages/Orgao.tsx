@@ -2,13 +2,9 @@ import Crud from "@/components/Crud/Crud";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import * as F from '@radix-ui/react-form';
 import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
-import Input from "@/components/Form/Input";
-import { api, submit } from "@/services/api";
+import { submit } from "@/services/api";
 
-import { toast } from 'react-toastify';
 
 type Orgao = {
   descricao: string;
@@ -43,12 +39,12 @@ function Form() {
     }});
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register("descricao")} placeholder="descrição" />
-      <input type="text" {...register("responsavel")} placeholder="responsavel" />
-      <input type="text" {...register("cpf")} placeholder="cpf" />
-      <input type="text" {...register("num_expediente")} placeholder="num_expediente" />
-      <ButtonsCrud />
+    <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
+      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("descricao")} placeholder="Descrição" />
+      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("responsavel")} placeholder="Responsável" />
+      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("cpf")} placeholder="CPF" />
+      <input type="text"  className="border rounded-md p-3 w-full outline-none" {...register("num_expediente")} placeholder="Num_expediente" />
+      <ButtonsCrud btnNew={false} />
     </form>
   )
 }
