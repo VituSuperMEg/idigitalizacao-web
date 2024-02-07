@@ -6,11 +6,12 @@ import OrgaoPage from "@/pages/Orgao";
 import FuncionariosPage from "@/pages/Funcionario";
 import PillMenu from "./components/PillMenu";
 import './panel.css';
+import SetorPage from "@/pages/Setor";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
   funcionario: <FuncionariosPage />,
-  // relatorios: <RelatoriosPage />,
+  Setor : <SetorPage />,
 };
 
 export function Panel() {

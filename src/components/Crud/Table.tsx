@@ -41,7 +41,7 @@ export default function Table({ fields, endPoint }: ITable) {
     <div>
       <table className="w-full mt-6 table">
         <thead>
-          {fields.map((i) => (
+          {fields?.map((i) => (
             <th className="text-zinc-500 head" key={i.head}>{i.head}</th>
           ))}
           <th className="text-zinc-500 float-right mr-8">Ações</th>
@@ -50,7 +50,7 @@ export default function Table({ fields, endPoint }: ITable) {
           {data &&
             data.map((item: any, index) => (
               <tr key={index}>
-                {fields.map((i) => (
+                {fields?.map((i) => (
                   <td key={i.body}>
                     {item[i.body]}
                   </td>
