@@ -7,11 +7,11 @@ import { api, submit } from "@/services/api";
 import { useEffect, useState } from "react";
 import { useCrud } from "@/store/crud";
 
-type Setor = {
+type TiposDocumentos = {
   descricao: string;
 }
 
-const SetorSchema = z.object({
+const TiposDocumentosSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
 });
 
@@ -21,8 +21,8 @@ function Form() {
     handleSubmit,
     setValue,
     formState: { errors }
-  } = useForm<Setor>({
-    resolver: zodResolver(SetorSchema)
+  } = useForm<TiposDocumentos>({
+    resolver: zodResolver(TiposDocumentosSchema)
   });
 
   const id = useCrud(state => state.id);
@@ -32,9 +32,9 @@ function Form() {
     if (view === "edit") {
       async function fillFormFields() {
         try {
-          const response = await api.get(`/setor/${id}`);
+          const response = await api.get(`/tipos-documentos/${id}`);
           const data = response.data.data[0];
-          Object.keys(data).forEach((key: keyof Setor) => {
+          Object.keys(data).forEach((key: keyof TiposDocumentos) => {
             setValue(key, data[key]);
           });
         } catch (error) {
@@ -48,7 +48,7 @@ function Form() {
   async function onSubmit(values: any) {
     if(view === "new") {
       await submit({
-        endPoint: "/setor", values: {
+        endPoint: "/tipos-documentos", values: {
           descricao: values.descricao,
           responsavel: values.responsavel,
           cpf: values.cpf,
@@ -57,7 +57,7 @@ function Form() {
       });
     }else{
       await submit({
-        endPoint: "/setor/update", values: {
+        endPoint: "/tipos-documentos/update", values: {
           id : id,
           descricao: values.descricao,
         }
@@ -76,11 +76,11 @@ function Form() {
   )
 }
 
-export default function Setor() {
+export default function TiposDocumentos() {
   return (
     <Crud
-      display={{ displayName: "Setor", displayMenu: "Cadastro" }}
-      endPoint="setor"
+      display={{ displayName: "Tipos de Documentos", displayMenu: "Cadastro" }}
+      endPoint="tipos-documentos"
       fieldsTable={[
         { head: "Código", body: "id" },
         { head: "Descrição", body: "descricao" },
