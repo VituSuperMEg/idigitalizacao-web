@@ -8,11 +8,13 @@ import SetorPage from "@/pages/Setor";
 
 import './panel.css';
 import TiposDocumentosPage from "@/pages/TiposDocumentos";
+import SalasPage from "@/pages/Salas";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
   Setor : <SetorPage />,
-  TiposDocumentos : <TiposDocumentosPage />
+  TiposDocumentos : <TiposDocumentosPage />,
+  Salas  : <SalasPage />
 };
 
 export function Panel() {

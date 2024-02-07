@@ -27,6 +27,7 @@ export function SidebarMenu({
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("TiposDocumentos")}>Tipos de Documentos</p>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Salas")}>Salas</p>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Caixas")}>Caixas</p>
+                <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Estantes")}>Estantes</p>
               </div>
             </Accordion.Content>
           </Accordion.Item>
