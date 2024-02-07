@@ -24,7 +24,7 @@ export function SidebarMenu({
               <div className='flex flex-col ml-2'>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Orgão")}>Orgão</p>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Setor")}>Setor</p>
-                <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Tipos Documentos")}>Tipos de Documentos</p>
+                <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("TiposDocumentos")}>Tipos de Documentos</p>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Salas")}>Salas</p>
                 <p className='hover:bg-stone-100 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Caixas")}>Caixas</p>
               </div>

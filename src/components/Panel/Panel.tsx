@@ -1,16 +1,18 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { SidebarMenu } from "./components/SidebarMenu";
 import OrgaoPage from "@/pages/Orgao";
-import FuncionariosPage from "@/pages/Funcionario";
 import PillMenu from "./components/PillMenu";
+import SetorPage from "@/pages/Setor";
+
 import './panel.css';
+import TiposDocumentosPage from "@/pages/TiposDocumentos";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
-  funcionario: <FuncionariosPage />,
-  // relatorios: <RelatoriosPage />,
+  Setor : <SetorPage />,
+  TiposDocumentos : <TiposDocumentosPage />
 };
 
 export function Panel() {
