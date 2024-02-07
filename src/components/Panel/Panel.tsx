@@ -2,19 +2,26 @@
 
 import { useState } from "react";
 import { SidebarMenu } from "./components/SidebarMenu";
+
 import OrgaoPage from "@/pages/Orgao";
 import PillMenu from "./components/PillMenu";
 import SetorPage from "@/pages/Setor";
-
-import './panel.css';
 import TiposDocumentosPage from "@/pages/TiposDocumentos";
 import SalasPage from "@/pages/Salas";
+import CaixasPage from '@/pages/Caixas';
+import EstantesPage from "@/pages/Estantes";
+
+
+
+import './panel.css';
 
 const pages: any = {
   Orgão: <OrgaoPage />,
   Setor : <SetorPage />,
   TiposDocumentos : <TiposDocumentosPage />,
-  Salas  : <SalasPage />
+  Salas  : <SalasPage />,
+  Caixas : <CaixasPage />,
+  Estantes : <EstantesPage />
 };
 
 export function Panel() {
