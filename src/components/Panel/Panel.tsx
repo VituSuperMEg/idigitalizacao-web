@@ -15,6 +15,7 @@ import CredoresPage from "@/pages/Credores";
 
 
 import './panel.css';
+import ButtonAsync from "../ButtonAsync/ButtonAsync";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
@@ -54,8 +55,9 @@ export function Panel() {
       <div className="w-screen h-screen flex items-center justify-center bg-slate-100">
         <div className="w-full h-5/6 m-10 bg-white rounded-xl p-10">
           <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu}/>
+          <ButtonAsync />
           {pages[page]}
-        </div>   
+        </div>
       </div>
     </div>
   );
