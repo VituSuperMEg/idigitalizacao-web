@@ -6,23 +6,25 @@ import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
 import { api, submit } from "@/services/api";
 import { useEffect, useState } from "react";
 import { useCrud } from "@/store/crud";
+import Select from "@/components/Form/Select";
+import { bancos, tipodocumneto } from "@/helpers/util";
 
 type Credores = {
-  nome : string;
-  tipo_documento : string;
-  cpf : string;
-  logradouro : string;
-  numero : string;
-  bairo : string;
-  cep : string;
-  email : string;
-  cidade : string;
-  telefone : string;
-  telefone_complementar : string;
-  banco : string;
-  agencia : string;
-  conta : string;
-  onservacoes : string;
+  nome: string;
+  tipo_documento: string;
+  cpf: string;
+  logradouro: string;
+  numero: string;
+  bairo: string;
+  cep: string;
+  email: string;
+  cidade: string;
+  telefone: string;
+  telefone_complementar: string;
+  banco: string;
+  agencia: string;
+  conta: string;
+  onservacoes: string;
 }
 
 const CredoresSchema = z.object({
@@ -41,12 +43,13 @@ function Form() {
 
   const id = useCrud(state => state.id);
   const view = useCrud(state => state.view);
+  const [tipo_documento, setTipo_documento] = useState("");
 
   useEffect(() => {
     if (view === "edit") {
       async function fillFormFields() {
         try {
-          const response = await api.get(`/estantes/${id}`);
+          const response = await api.get(`/credores/${id}`);
           const data = response.data.data[0];
           Object.keys(data).forEach((key: keyof Credores) => {
             setValue(key, data[key]);
@@ -60,36 +63,114 @@ function Form() {
   }, [view]);
 
   async function onSubmit(values: any) {
-    if(view === "new") {
+    if (view === "new") {
       await submit({
         endPoint: "/credores", values: {
           descricao: values.descricao,
         }
       });
-    }else{
+    } else {
       await submit({
         endPoint: "/credores/update", values: {
-          id : id,
+          id: id,
           descricao: values.descricao,
         }
       });
     }
   }
+
+  function handleChange(e : any) {
+    setTipo_documento(e.target.value)
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
-      <div className="flex justify-between">
+      <div className="flex gap-2">
       <label>
         Id
         <input type="text" className="border rounded-md p-3 w-full outline-none" disabled />
-        {errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
-      </label> 
-      <label>
-        Descrição
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("descricao")} />
-        {errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
-      </label> 
+      </label>
+      <label className="w-full">
+        Nome
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
       </div>
+     <div className="flex gap-2 items-center">
+      <Select
+        label="Tipo de Documento"
+        handleChange={handleChange}
+        defaultOption="Selecione um documento"
+        options={tipodocumneto}
+      />
+      <label>
+        CPF
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label className="w-full">
+        E-mail
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+     </div>
+     <div className="flex gap-1">
+      <label className="w-full">
+        Logradouro
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label>
+        Número
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label>
+        Bairro
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label>
+        CEP
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
 
+     </div>
+     <div className="flex gap-1 items-center">
+      <label className="w-full">
+        Telefone
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label>
+        Telefone Complementar
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+     </div>
+     <div className="flex gap-2">
+      <Select 
+       label="Banco"
+       defaultOption="Selecione um banco"
+       options={bancos}
+       handleChange={handleChange}
+      />
+      <label className="w-full">
+        Agencia
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+      <label>
+        Conta
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
+     </div>
+      <label>
+        Observações
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
+        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+      </label>
       <ButtonsCrud btnNew={false} />
     </form>
   )

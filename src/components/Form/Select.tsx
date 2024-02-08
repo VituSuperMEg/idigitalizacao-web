@@ -8,19 +8,21 @@ interface ISelect extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: Option[];
   defaultOption?: string;
-  required : boolean;
+  required?: boolean;
+  handleChange : any;
 }
 
 export default function Select({
   defaultOption,
   options,
   label,
-  required
+  required,
+  handleChange
 }: ISelect) {
   return (
-    <label className="mt-4">
+    <label className="flex flex-col">
       {label} <span className="text-red-500">{required && "*"}</span>
-      <select className="border p-4 rounded-lg outline-none cursor-pointer">
+      <select className="border p-4 rounded-lg outline-none cursor-pointer" onChange={handleChange}>
         {defaultOption && (<option>{defaultOption}</option>)}
         {options.map((option: Option) => (
           <option key={option.value} value={option.value}>
