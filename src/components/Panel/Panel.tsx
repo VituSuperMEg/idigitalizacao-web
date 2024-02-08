@@ -10,6 +10,7 @@ import TiposDocumentosPage from "@/pages/TiposDocumentos";
 import SalasPage from "@/pages/Salas";
 import CaixasPage from '@/pages/Caixas';
 import EstantesPage from "@/pages/Estantes";
+import CredoresPage from "@/pages/Credores";
 
 
 
@@ -21,7 +22,8 @@ const pages: any = {
   TiposDocumentos : <TiposDocumentosPage />,
   Salas  : <SalasPage />,
   Caixas : <CaixasPage />,
-  Estantes : <EstantesPage />
+  Estantes : <EstantesPage />,
+  Credores : <CredoresPage />
 };
 
 export function Panel() {
