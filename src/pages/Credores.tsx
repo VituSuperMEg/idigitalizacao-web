@@ -8,27 +8,37 @@ import { useEffect, useState } from "react";
 import { useCrud } from "@/store/crud";
 import Select from "@/components/Form/Select";
 import { bancos, tipodocumneto } from "@/helpers/util";
+import InputMask from "react-input-mask";
 
 type Credores = {
-  nome: string;
-  tipo_documento: string;
-  cpf: string;
-  logradouro: string;
-  numero: string;
-  bairo: string;
-  cep: string;
-  email: string;
-  cidade: string;
-  telefone: string;
-  telefone_complementar: string;
-  banco: string;
-  agencia: string;
-  conta: string;
-  onservacoes: string;
+  nome : string;
+   cpf: string;
+   logradouro: string;
+   numero: string;
+   bairro: string;
+   cep: string;
+   email: string;
+   cidade: string;
+   telefone: string;
+   telefone_complementar: string;
+   agencia: string;
+   conta: string;
+   observacoes: string;
 }
-
 const CredoresSchema = z.object({
-  descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
+  // nome : z.string(),
+  // cpf: z.string(),
+  // logradouro: z.string(),
+  // numero: z.string(),
+  // bairro: z.string(),
+  // cep: z.string(),
+  // email: z.string(),
+  // cidade: z.string(),
+  // telefone: z.string(),
+  // telefone_complementar: z.string(),
+  // agencia: z.string(),
+  // conta: z.string(),
+  // observacoes: z.string(),
 });
 
 function Form() {
@@ -38,12 +48,14 @@ function Form() {
     setValue,
     formState: { errors }
   } = useForm<Credores>({
-    resolver: zodResolver(CredoresSchema)
+    // resolver: zodResolver(CredoresSchema)
   });
+  // type Credores = z.infer<typeof CredoresSchema>
 
   const id = useCrud(state => state.id);
   const view = useCrud(state => state.view);
   const [tipo_documento, setTipo_documento] = useState("");
+  const [banco, setBanco] =  useState("");
 
   useEffect(() => {
     if (view === "edit") {
@@ -63,28 +75,40 @@ function Form() {
   }, [view]);
 
   async function onSubmit(values: any) {
+    console.log(values)
     if (view === "new") {
       await submit({
         endPoint: "/credores", values: {
-          descricao: values.descricao,
+          nome: values.nome,
+          tipo_documento: tipo_documento,
+          cpf: values.cpf,
+          logradouro: values.logradouro,
+          numero: values.numero,
+          bairro: values.bairro,
+          cep: values.cep,
+          email: values.email,
+          cidade: values.cidade,
+          telefone: values.telefone,
+          telefone_complementar: values.telefone_complementar,
+          banco: banco,
+          agencia: values.agencia,
+          conta: values.conta,
+          observacoes: values.observacoes,
         }
       });
     } else {
       await submit({
         endPoint: "/credores/update", values: {
           id: id,
-          descricao: values.descricao,
+        //  descricao: values.descricao, 
         }
       });
     }
   }
-
-  function handleChange(e : any) {
-    setTipo_documento(e.target.value)
-  }
+  console.log(banco)
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
       <label>
         Id
         <input type="text" className="border rounded-md p-3 w-full outline-none" disabled />
@@ -94,82 +118,87 @@ function Form() {
         <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
         {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
       </label>
-      </div>
-     <div className="flex gap-2 items-center">
       <Select
         label="Tipo de Documento"
-        handleChange={handleChange}
+        handleChange={(e : any)=> setTipo_documento(e.target.value)}
         defaultOption="Selecione um documento"
         options={tipodocumneto}
       />
+      </div>
+     <div className="flex gap-2 items-center">
       <label>
         CPF
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cpf")} />
+        {errors.cpf && <p className="text-red-500">{errors.cpf.message}</p>}
       </label>
       <label className="w-full">
         E-mail
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
-      </label>
-     </div>
-     <div className="flex gap-1">
-      <label className="w-full">
-        Logradouro
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input  type="text" className="border rounded-md p-3 w-full outline-none" {...register("email")} />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </label>
       <label>
-        Número
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
-      </label>
-      <label>
-        Bairro
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
-      </label>
-      <label>
-        CEP
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
-      </label>
-
-     </div>
-     <div className="flex gap-1 items-center">
-      <label className="w-full">
         Telefone
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("telefone")} />
+        {errors.telefone && <p className="text-red-500">{errors.telefone.message}</p>}
       </label>
       <label>
         Telefone Complementar
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("telefone_complementar")} />
+        {errors.telefone_complementar && <p className="text-red-500">{errors.telefone_complementar.message}</p>}
       </label>
+     </div>
+     <div className="flex gap-1">
+     <label>
+        CEP
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cep")} />
+        {errors.cep && <p className="text-red-500">{errors.cep.message}</p>}
+      </label>
+      <label className="w-full">
+        Logradouro
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("logradouro")} />
+        {errors.logradouro && <p className="text-red-500">{errors.logradouro.message}</p>}
+      </label>
+      <label>
+        Cidade
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cidade")} />
+        {errors.logradouro && <p className="text-red-500">{errors.logradouro.message}</p>}
+      </label>
+      <label>
+        Número
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("numero")} />
+        {errors.numero && <p className="text-red-500">{errors.numero.message}</p>}
+      </label>
+      <label>
+        Bairro
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("bairro")} />
+        {errors.bairro && <p className="text-red-500">{errors.bairro.message}</p>}
+      </label>
+     </div>
+     <div className="flex gap-1 items-center">
+     
      </div>
      <div className="flex gap-2">
       <Select 
        label="Banco"
        defaultOption="Selecione um banco"
        options={bancos}
-       handleChange={handleChange}
+       handleChange={(e : any) => setBanco(e.target.value)}
       />
       <label className="w-full">
         Agencia
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("agencia")} />
+        {errors.agencia && <p className="text-red-500">{errors.agencia.message}</p>}
       </label>
       <label>
         Conta
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("conta")} />
+        {errors.conta && <p className="text-red-500">{errors.conta.message}</p>}
       </label>
      </div>
       <label>
         Observações
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("nome")} />
-        {errors.nome && <p className="text-red-500">{errors.nome.message}</p>}
+        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("observacoes")} />
+        {errors.observacoes && <p className="text-red-500">{errors.observacoes.message}</p>}
       </label>
       <ButtonsCrud btnNew={false} />
     </form>
