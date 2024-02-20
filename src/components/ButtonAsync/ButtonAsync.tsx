@@ -35,7 +35,7 @@ export default function ButtonAsync () {
   }
 
   return (
-    <button className={`${stage_color[stage_control]} p-4 w-60 rounded-lg hover:brightness-75`} onClick={() => handleChange()}>
+    <button className={`${stage_color[stage_control]} p-4 w-60 rounded-lg hover:brightness-80`} onClick={() => handleChange()}>
       <strong className="flex items-center justify-center gap-5 text-white">
         {stage_icon[stage_control]}{stage[stage_control]}
       </strong>
