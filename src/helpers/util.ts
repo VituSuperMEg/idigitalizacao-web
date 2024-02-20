@@ -1,3 +1,5 @@
+import { getCep } from "@/services/viacep";
+
 export const tipodocumneto = [
   { label : "CPF", value : "CPF"},
   { label : "CNPJ", value : "CNPJ"},

@@ -5,6 +5,8 @@ interface ICrud {
   setId: (id: number) => void;
   view : string;
   setView: (view: string) => void;
+  curretPage : any;
+  setCurretPage: any;
 }
 export const useCrud = create<ICrud>((set) => {
   return {
@@ -12,5 +14,7 @@ export const useCrud = create<ICrud>((set) => {
     setId: (id: number) => set({ id }),
     view: "list",
     setView : (view : string) => set({ view }),
+    curretPage: 1,
+    setCurretPage: (current : any) => set({ curretPage : current}),
   }
 })

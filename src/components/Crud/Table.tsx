@@ -13,13 +13,16 @@ export default function Table({ fields, endPoint }: ITable) {
 
   const [data, setData] = useState<any[]>([]);
 
-  // zustand 
+  // zustand
   const setId = useCrud(state => state.setId);
   const setView = useCrud(state => state.setView);
+  const currentPage = useCrud(state => state.curretPage);
+  const setCurretPage = useCrud(state => state.setCurretPage);
 
   async function getList() {
-    const list = await api.get(`${endPoint}`);
-    setData(list.data.data);
+    const list = await api.get(`${endPoint}?page=${currentPage}`);
+    setCurretPage(list.data.data.current_page)
+    setData(list.data.data.data);
   }
 
   async function remove(id: number) {
@@ -32,17 +35,17 @@ export default function Table({ fields, endPoint }: ITable) {
 
   useEffect(() => {
     getList();
-  }, []);
-  
+  }, [currentPage]);
+
   function handleId(id : number) {
     setId(id)
   }
   return (
     <div>
-      <table className="w-full mt-6 table">
+      <table className="w-full mt-2 table">
         <thead>
           {fields?.map((i) => (
-            <th className="text-zinc-500 head" key={i.head}>{i.head}</th>
+            <th className="text-zinc-500" key={i.head}>{i.head}</th>
           ))}
           <th className="text-zinc-500 float-right mr-8">Ações</th>
         </thead>
@@ -59,10 +62,10 @@ export default function Table({ fields, endPoint }: ITable) {
                   <ToolTip
                     element={
                       <td
-                        className="bg-slate-400 mt-2 mb-2"
+                        className="bg-slate-400 m-1"
                         style={{
-                          width: "50px",
-                          height: "50px",
+                          width: "40px",
+                          height: "40px",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -72,6 +75,7 @@ export default function Table({ fields, endPoint }: ITable) {
                         <Pencil
                           color="#fff"
                           className="cursor-pointer"
+                          size={20}
                           onClick={() => {
                             setView("edit");
                             handleId(item.id);
@@ -84,10 +88,10 @@ export default function Table({ fields, endPoint }: ITable) {
                   <ToolTip
                     element={
                     <td
-                      className="bg-red-500"
+                      className="bg-red-500 m-1"
                       style={{
-                        width: "50px",
-                        height: "50px",
+                        width: "40px",
+                        height: "40px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -97,6 +101,7 @@ export default function Table({ fields, endPoint }: ITable) {
                       <Trash
                         color="#fff"
                         className="cursor-pointer"
+                        size={20}
                         onClick={() => {
                           remove(item.id)
                         }}
