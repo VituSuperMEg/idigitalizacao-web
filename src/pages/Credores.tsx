@@ -7,11 +7,12 @@ import { api, submit } from "@/services/api";
 import { useEffect, useState } from "react";
 import { useCrud } from "@/store/crud";
 import Select from "@/components/Form/Select";
-import { bancos, obterLocalizcaoPorCep, tipodocumneto } from "@/helpers/util";
+import { bancos, tipodocumneto } from "@/helpers/util";
 import InputMask from "react-input-mask";
 import { getCep } from "@/services/viacep";
 
 type Credores = {
+  id : string;
   nome: string;
   cpf: string;
   logradouro: string;
@@ -67,6 +68,8 @@ function Form() {
           const data = response.data.data[0];
           Object.keys(data).forEach((key: keyof Credores) => {
             setValue(key, data[key]);
+            setBanco(data.banco);
+            setTipo_documento(data.tipo_documento);
           });
         } catch (error) {
           console.error("Erro ao preencher os campos do formulário:", error);
@@ -119,7 +122,7 @@ function Form() {
       <div className="flex gap-2 items-center">
         <label>
           Id
-          <input type="text" className="border rounded-md p-3 w-full outline-none" disabled />
+          <input type="text" className="border rounded-md p-3 w-full outline-none" disabled {...register("id")}/>
         </label>
         <label className="w-full">
           Nome
@@ -131,6 +134,7 @@ function Form() {
           handleChange={(e: any) => setTipo_documento(e.target.value)}
           defaultOption="Selecione um documento"
           options={tipodocumneto}
+          value={tipo_documento}
         />
       </div>
       <div className="flex gap-2 items-center">
@@ -182,14 +186,12 @@ function Form() {
           {errors.bairro && <p className="text-red-500">{errors.bairro.message}</p>}
         </label>
       </div>
-      <div className="flex gap-1 items-center">
-
-      </div>
       <div className="flex gap-2">
         <Select
           label="Banco"
           defaultOption="Selecione um banco"
           options={bancos}
+          value={banco}
           handleChange={(e: any) => setBanco(e.target.value)}
         />
         <label className="w-full">

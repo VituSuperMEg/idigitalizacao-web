@@ -6,6 +6,7 @@ import Buttons from "./Buttons";
 
 import './crud.css';
 import { useCrud } from "@/store/crud";
+import Pagination from "./Pag";
 
 interface ICrud {
   display: {
@@ -23,8 +24,7 @@ export default function Crud({
   fieldsTable,
   form,
   endPoint,
-}: ICrud) { 
-
+}: ICrud) {
   const view = useCrud(state => state.view);
   return (
     <div>
@@ -38,10 +38,11 @@ export default function Crud({
       </header>
       <If test={view === "list"}>
         <div className="w-full">
-          <Table 
-            fields={fieldsTable} 
+          <Table
+            fields={fieldsTable}
             endPoint={endPoint}
           />
+          <Pagination  />
         </div>
       </If>
       <If test={view === "new"}>

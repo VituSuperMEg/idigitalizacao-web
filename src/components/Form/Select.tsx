@@ -17,12 +17,13 @@ export default function Select({
   options,
   label,
   required,
-  handleChange
+  handleChange,
+  ...rest
 }: ISelect) {
   return (
     <label className="flex flex-col">
       {label} <span className="text-red-500">{required && "*"}</span>
-      <select className="border p-4 rounded-lg outline-none cursor-pointer" onChange={handleChange}>
+      <select className="border p-4 rounded-lg outline-none cursor-pointer" onChange={handleChange} {...rest}>
         {defaultOption && (<option>{defaultOption}</option>)}
         {options.map((option: Option) => (
           <option key={option.value} value={option.value}>
