@@ -21,7 +21,6 @@ const OrgaoSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
   responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
   cpf: z.string().nonempty("o cpf é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }).max(11, { message: "o maximo é 11 cararecteres" }),
-  num_expediente: z.string().nonempty().max(15)
 });
 
 function Form() {
@@ -56,7 +55,7 @@ function Form() {
   }, [view]);
 
   async function onSubmit(values: any) {
-    if(view === "new") {
+    if (view === "new") {
       await submit({
         endPoint: "/orgaos", values: {
           descricao: values.descricao,
@@ -65,10 +64,10 @@ function Form() {
           num_expediente: values.num_expediente
         }
       });
-    }else{
+    } else {
       await submit({
         endPoint: "/orgaos/update", values: {
-          id : id,
+          id: id,
           descricao: values.descricao,
         }
       });
@@ -77,34 +76,35 @@ function Form() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
       <Input
-       label="Descrição"
-       control={control}
-       {...register("descricao")}
-       errors={errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
+        label="Descrição"
+        required
+        control={control}
+        {...register("descricao")}
+        errors={errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
       />
-      {/* <label>
-        Descrição
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("descricao")} />
-        {errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
-      </label> */}
       <div className="flex justify-between gap-3">
-      <label htmlFor="" className="w-full">
-        Responsável
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("responsavel")} />
-        {errors.responsavel && <p className="text-red-500">{errors.responsavel.message}</p>}
-      </label>
-      <label htmlFor="">
-        CPF
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cpf")} />
-        {errors.cpf && <p className="text-red-500">{errors.cpf.message}</p>}
-      </label>
+        <Input
+          className="w-full"
+          label="Responsável"
+          required
+          control={control}
+          {...register("responsavel")}
+          errors={errors.responsavel && <p className="text-red-500">{errors.responsavel.message}</p>}
+        />
+        <Input
+          label="CPF"
+          required
+          control={control}
+          {...register("cpf")}
+          errors={errors.cpf && <p className="text-red-500">{errors.cpf.message}</p>}
+        />
       </div>
-      <label htmlFor="">
-        Num_expediente
-        <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("num_expediente")} />
-        {errors.num_expediente && <p className="text-red-500">{errors.num_expediente.message}</p>}
-      </label>
-      <ButtonsCrud btnNew={false} />
+      <Input
+        label="Num_expediente"
+        control={control}
+        {...register("cpf")}
+      />
+      <ButtonsCrud btnNew />
     </form>
   )
 }
