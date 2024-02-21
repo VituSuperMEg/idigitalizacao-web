@@ -6,6 +6,7 @@ import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
 import { api, submit } from "@/services/api";
 import { useEffect, useState } from "react";
 import { useCrud } from "@/store/crud";
+import { Input } from "@/components/Form/Input";
 
 
 type Orgao = {
@@ -28,6 +29,7 @@ function Form() {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors }
   } = useForm<Orgao>({
     resolver: zodResolver(OrgaoSchema)
@@ -74,11 +76,17 @@ function Form() {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
-      <label>
+      <Input
+       label="Descrição"
+       control={control}
+       {...register("descricao")}
+       errors={errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
+      />
+      {/* <label>
         Descrição
         <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("descricao")} />
         {errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
-      </label>
+      </label> */}
       <div className="flex justify-between gap-3">
       <label htmlFor="" className="w-full">
         Responsável
@@ -101,8 +109,6 @@ function Form() {
   )
 }
 export default function OrgaoPage() {
-
-  const [id, setId] = useState(0);
   return (
     <div>
       <Crud
