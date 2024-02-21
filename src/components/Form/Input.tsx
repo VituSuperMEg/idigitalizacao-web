@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import { Control, Controller, FieldErrors, FieldValues } from "react-hook-form";
 import InputMask from 'react-input-mask';
 
@@ -8,6 +8,8 @@ interface IInput<T> {
   mask?: any;
   label: string;
   errors: ReactNode;
+  className?: any;
+  required?: boolean;
 }
 
 export function Input<T>({
@@ -15,7 +17,9 @@ export function Input<T>({
   control,
   mask,
   label,
-  errors
+  errors,
+  className,
+  required
 }: IInput<T>) {
 
   return (
@@ -23,8 +27,8 @@ export function Input<T>({
       name={name as string}
       control={control}
       render={({ field }) => (
-        <label>
-          {label}
+        <label className={className}>
+          {label} {required && <span className="text-red-500">*</span>}
           <InputMask
             className="border rounded-md p-3 w-full outline-none"
             mask={mask}
