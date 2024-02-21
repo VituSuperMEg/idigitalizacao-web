@@ -4,6 +4,7 @@ import { PlusIcon as Plus } from 'lucide-react';
 import { File as Rel } from 'lucide-react';
 import { Archive as Document } from 'lucide-react';
 import { Settings as Set } from 'lucide-react';
+import MainInfo from './MainInfo';
 
 
 interface ISidebarMenu {
@@ -13,9 +14,9 @@ export function SidebarMenu({
   onCapturePageChange
 }: ISidebarMenu) {
   return (
-    <ul className=" shadow-lg w-44 flex flex-col p-2">
-      <p>Idigitalizacao</p>
+    <ul className="shadow-lg w-44 flex flex-col p-2 justify-between">
       <div>
+      <p>Idigitalizacao</p>
         <Accordion.Root type="multiple">
           {/* Cadastro */}
           <Accordion.Item className="w-ful" value="item-1">
@@ -36,7 +37,7 @@ export function SidebarMenu({
           <Accordion.Item className="w-ful" value="item-2">
             <Accordion.Trigger className='w-full flex items-center gap-2 hover:bg-stone-100 rounded-lg p-2'><Document size={20} /> Documentos</Accordion.Trigger>
           </Accordion.Item>
-          
+
 
           {/* Relatórios */}
           <Accordion.Item className="w-ful" value="item-3">
@@ -48,7 +49,7 @@ export function SidebarMenu({
               </div>
             </Accordion.Content>
           </Accordion.Item>
-          
+
           {/* Utilitários */}
           <Accordion.Item className="w-ful" value="item-4">
             <Accordion.Trigger className='w-full flex items-center gap-2 hover:bg-stone-100 rounded-lg p-2'><Set size={20} /> Utilitários</Accordion.Trigger>
@@ -65,7 +66,7 @@ export function SidebarMenu({
           </Accordion.Item>
         </Accordion.Root>
       </div>
-
+      <MainInfo />
     </ul>
   )
 }

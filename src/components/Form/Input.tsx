@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode } from "react";
 import { Control, Controller, FieldErrors, FieldValues } from "react-hook-form";
 import InputMask from 'react-input-mask';
 
-interface IInput<T> {
+interface IInput<T> extends HTMLAttributes<HTMLInputElement>{
   name: keyof T;
   control: Control<T>;
   mask?: any;
@@ -19,7 +19,8 @@ export function Input<T>({
   label,
   errors,
   className,
-  required
+  required,
+  ...rest
 }: IInput<T>) {
 
   return (
@@ -33,6 +34,7 @@ export function Input<T>({
             className="border rounded-md p-3 w-full outline-none"
             mask={mask}
             {...field}
+            {...rest}
           />
          {errors}
         </label>
