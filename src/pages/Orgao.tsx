@@ -9,13 +9,7 @@ import { useCrud } from "@/store/crud";
 import { Input } from "@/components/Form/Input";
 
 
-type Orgao = {
-  descricao: string;
-  responsavel: string;
-  cpf: string;
-  num_expediente: string;
-  cod_setor: string;
-}
+
 
 const OrgaoSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
@@ -108,6 +102,14 @@ function Form() {
     </form>
   )
 }
+type Orgao = {
+  descricao: string;
+  responsavel: string;
+  cpf: string;
+  num_expediente: string;
+  cod_setor: string;
+}
+
 export default function OrgaoPage() {
   return (
     <div>

@@ -7,6 +7,7 @@ import Buttons from "./Buttons";
 import './crud.css';
 import { useCrud } from "@/store/crud";
 import Pagination from "./Pag";
+import Form from "./Form";
 
 interface ICrud {
   display: {
@@ -18,12 +19,18 @@ interface ICrud {
   ];
   form: ReactNode;
   endPoint: string;
+  Type : any;
+  Schema : any;
+  onSubmit : (values : any) => void;
 }
 export default function Crud({
   display,
   fieldsTable,
   form,
   endPoint,
+  onSubmit,
+  Schema,
+  Type
 }: ICrud) {
   const view = useCrud(state => state.view);
   return (
@@ -46,6 +53,7 @@ export default function Crud({
         </div>
       </If>
       <If test={view === "new"}>
+        {/* <Form form={form} onSubmit={onSubmit}  Schema={Schema} Type={Type}/> */}
         {form}
       </If>
       <If test={view === "edit"}>
