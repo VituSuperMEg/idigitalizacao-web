@@ -18,10 +18,14 @@ export default function Table({ fields, endPoint }: ITable) {
   const setView = useCrud(state => state.setView);
   const currentPage = useCrud(state => state.curretPage);
   const setCurretPage = useCrud(state => state.setCurretPage);
+  const setTotalPages = useCrud(state => state.setTotalPages);
+  const setLastPage = useCrud(state => state.setLastPage);
 
   async function getList() {
     const list = await api.get(`${endPoint}?page=${currentPage}`);
-    setCurretPage(list.data.data.current_page)
+    setCurretPage(list.data.data.current_page);
+    setTotalPages(list.data.data.total);
+    setLastPage(list.data.data.last_page);
     setData(list.data.data.data);
   }
 

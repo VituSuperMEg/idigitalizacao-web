@@ -1,52 +1,42 @@
-import { InputHTMLAttributes } from "react";
+import { HTMLAttributes, ReactNode } from "react";
+import { Control, Controller, FieldErrors, FieldValues } from "react-hook-form";
 import InputMask from 'react-input-mask';
-import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IInput<T> {
+  name: keyof T;
+  control: Control<T>;
+  mask?: any;
   label: string;
-  mask?: string;
-  error?: string;
-  name: string;
-  register: UseFormRegisterReturn;
+  errors: ReactNode;
+  className?: any;
+  required?: boolean;
 }
 
-export default function Input({
-  label,
-  mask,
-  error,
+export function Input<T>({
   name,
-  register,
-  ...rest
-}: InputProps) {
+  control,
+  mask,
+  label,
+  errors,
+  className,
+  required
+}: IInput<T>) {
 
   return (
-    <div className="w-3/6 mt-5">
-      <div>
-        <label>
-          {label}
-        </label>
-      </div>
-      <div>
-        {mask ? (
+    <Controller
+      name={name as string}
+      control={control}
+      render={({ field }) => (
+        <label className={className}>
+          {label} {required && <span className="text-red-500">*</span>}
           <InputMask
+            className="border rounded-md p-3 w-full outline-none"
             mask={mask}
-            className="border rounded-md p-3 w-full outline-none"
-            type="text"
-            {...register(name)}
-            {...rest}
+            {...field}
           />
-        ) : (
-          <input
-            className="border rounded-md p-3 w-full outline-none"
-            type="text"
-            {...register(name)}
-            {...rest}
-          />
-        )}
-      </div>
-      <div className="block">
-        <span className="text-red-500">{error}</span>
-      </div>
-    </div>
-  );
+         {errors}
+        </label>
+      )}
+    />
+  )
 }
