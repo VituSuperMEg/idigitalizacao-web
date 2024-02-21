@@ -7,6 +7,6 @@ interface Auth {
 
 export const useAuth = create<Auth>((set) => {
   return {
-   isAuthenticated: false, 
+     isAuthenticated: false,
   }
 })
