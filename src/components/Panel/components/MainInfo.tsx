@@ -2,7 +2,7 @@ import Avatar from "@/components/Avatar/avatar";
 import Separator from "@/components/Separator/separator";
 import ToolTip from "@/components/Tooltip/Tooltip";
 import { useAuth } from "@/store/auth";
-import { Dot, LogOut, Settings, User } from "lucide-react";
+import { Dot, LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { useState } from "react";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
@@ -22,6 +22,15 @@ export default function MainInfo() {
         <DropdownMenu.Content className="bg-white mr-6 mt-4 w-44 h-36 rounded-md">
           <DropdownMenu.Item  className="flex items-center gap-5 border-0">
             <User /> Meu perfil
+          </DropdownMenu.Item>
+          <DropdownMenu.Item  className="flex items-center gap-5 border-0">
+            <Settings /> Configurações
+          </DropdownMenu.Item>
+          <DropdownMenu.Item  className="flex items-center gap-5 border-0">
+            <MessageSquare /> Notificações
+          </DropdownMenu.Item>
+          <DropdownMenu.Item  className="flex items-center gap-5 border-0">
+            <LogOut /> Sair
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
