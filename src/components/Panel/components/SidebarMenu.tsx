@@ -14,7 +14,7 @@ export function SidebarMenu({
 }: ISidebarMenu) {
   return (
     <ul className="bg-white w-44 flex flex-col p-2 justify-between m-4 rounded-lg">
-      <div className='text-center'>
+      <div>
        <p>🗃️ {""} Idigitalizacao</p>
         <Accordion.Root type="multiple" className='mt-16'>
           {/* Cadastro */}
