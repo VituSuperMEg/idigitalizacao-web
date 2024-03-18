@@ -1,12 +1,18 @@
 import { create } from 'zustand';
 
+export interface User {
+  name : string;
+}
 interface Auth {
-  isAuthenticated : boolean;
-  onLogin : (usuario : string , password : string) => void;
+  isAuthenticated: boolean;
+  user : User;
 }
 
 export const useAuth = create<Auth>((set) => {
   return {
-     isAuthenticated: false,
+    isAuthenticated: false,
+    user : {
+      name : 'ROOT'
+    }
   }
 })

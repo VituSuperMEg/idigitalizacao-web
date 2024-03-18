@@ -6,7 +6,6 @@ import { Archive as Document } from 'lucide-react';
 import { Settings as Set } from 'lucide-react';
 import MainInfo from './MainInfo';
 
-
 interface ISidebarMenu {
   onCapturePageChange: (page: string) => void;
 }

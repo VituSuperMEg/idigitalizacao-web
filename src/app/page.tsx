@@ -9,8 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
 
-  const isAuthenticated = useAuth(state => state.isAuthenticated);
-
+  // const isAuthenticated = useAuth(state => state.isAuthenticated);
+  const isAuthenticated = true;
   return (
     <main>
       <If test={isAuthenticated}>
