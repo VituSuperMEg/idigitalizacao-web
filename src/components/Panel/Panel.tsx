@@ -56,7 +56,6 @@ export function Panel() {
         <div className={`w-full m-10 ${page && "bg-white"} rounded-xl p-10`} style={{
           height: '95.4%'
         }}>
-
         <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu} />
           <div className="mt-16">
             {pages[page]}
