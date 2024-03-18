@@ -15,7 +15,7 @@ export default function PillMenu({
 
   return (
     <div className="pill">
-      <div className="bg-white shadow-lg p-3 rounded-md">
+      <div className="bg-white shadow-lg p-3 rounded-md"  onClick={() => setPage(false)}>
         <span>Dashboard</span>
       </div>
       {pages?.map(item => (

@@ -15,16 +15,15 @@ import CredoresPage from "@/pages/Credores";
 
 
 import './panel.css';
-import ButtonAsync from "../ButtonAsync/ButtonAsync";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
-  Setor : <SetorPage />,
-  TiposDocumentos : <TiposDocumentosPage />,
-  Salas  : <SalasPage />,
-  Caixas : <CaixasPage />,
-  Estantes : <EstantesPage />,
-  Credores : <CredoresPage />
+  Setor: <SetorPage />,
+  TiposDocumentos: <TiposDocumentosPage />,
+  Salas: <SalasPage />,
+  Caixas: <CaixasPage />,
+  Estantes: <EstantesPage />,
+  Credores: <CredoresPage />
 };
 
 export function Panel() {
@@ -34,7 +33,7 @@ export function Panel() {
   const handleCapturePageChange = (selectedPage: string) => {
     setPage(selectedPage);
     if (!pagesMenu.includes(selectedPage)) {
-      if(pagesMenu.length > 6) {
+      if (pagesMenu.length > 6) {
         alert("ta bom homi!")
         return false;
       }
@@ -49,16 +48,18 @@ export function Panel() {
     setPage(newPage);
   };
 
+
   return (
     <div className="h-screen flex">
       <SidebarMenu onCapturePageChange={handleCapturePageChange} />
       <div className="w-screen flex items-center justify-center bg-slate-100">
-        <div className="w-full m-10 bg-white rounded-xl p-10" style={{
-          height : '95.4%'
+        <div className={`w-full m-10 ${page && "bg-white"} rounded-xl p-10`} style={{
+          height: '95.4%'
         }}>
-        <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu}/>
+
+        <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu} />
           <div className="mt-16">
-          {pages[page]}
+            {pages[page]}
           </div>
         </div>
       </div>
