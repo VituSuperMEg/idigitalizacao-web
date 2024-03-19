@@ -5,4 +5,10 @@
   left : 200px;
   display: flex;
   gap: 0.5em;
+  justify-content: space-between;
+}
+.avatar {
+  position: absolute;
+  right: 10px;
+  top: 0;
 }
