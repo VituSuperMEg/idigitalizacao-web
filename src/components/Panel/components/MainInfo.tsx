@@ -19,7 +19,7 @@ export default function MainInfo() {
             <Avatar name={user.name} image={user.image} />
           </div>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="bg-white mr-4 p-3 flex flex-col gap-2 mt-4 h-36 rounded-md w-80 shadow-sm">
+        <DropdownMenu.Content className="bg-white mr-4 p-3 flex flex-col gap-2 mt-4 h-36 rounded-md w-80 shadow-lg">
           <DropdownMenu.Item className="flex items-center gap-5 border-0 outline-none">
             <User className="text-zinc-500" /> Meu perfil
           </DropdownMenu.Item>
