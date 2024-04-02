@@ -41,7 +41,7 @@ export default function Table({ fields, endPoint }: ITable) {
     getList();
   }, [currentPage]);
 
-  function handleId(id : number) {
+  function handleId(id: number) {
     setId(id)
   }
   return (
@@ -91,26 +91,26 @@ export default function Table({ fields, endPoint }: ITable) {
                   />
                   <ToolTip
                     element={
-                    <td
-                      className="bg-red-500 m-1"
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <Trash
-                        color="#fff"
-                        className="cursor-pointer"
-                        size={20}
-                        onClick={() => {
-                          remove(item.id)
+                      <td
+                        className="bg-red-500 m-1"
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: "50%",
                         }}
-                      />
-                    </td>}
+                      >
+                        <Trash
+                          color="#fff"
+                          className="cursor-pointer"
+                          size={20}
+                          onClick={() => {
+                            remove(item.id)
+                          }}
+                        />
+                      </td>}
                     description="Excluir"
                   />
                 </div>

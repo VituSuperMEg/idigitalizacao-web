@@ -53,8 +53,8 @@ export function Panel() {
   return (
     <div className="h-screen flex">
       <SidebarMenu onCapturePageChange={handleCapturePageChange} />
-      <div className="w-screen flex items-center justify-center bg-slate-100">
-        <div className={`w-full m-10 ${page && "bg-white"} rounded-xl p-10`} style={{
+      <div className="w-screen flex items-center justify-center bg-slate-100 mt-12">
+        <div className={`w-full m-4 ${page && "bg-white"} rounded-xl p-10`} style={{
           height: '95.4%'
         }}>
           <MainInfo />

@@ -1,6 +1,6 @@
 .pill {
   position: absolute;
-  top: 8px;
+  top: 30px;
   z-index: 99999;
   left : 200px;
   display: flex;

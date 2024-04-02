@@ -28,7 +28,7 @@ export default function Pagination() {
   return (
     <div className="flex items-center gap-3 mt-2" style={{ float: 'left' }}>
       <If test={currentPage > 1}>
-        <button onClick={() => handlePageChange(currentPage - 1)} className="border p-2" style={{ borderRadius: "20%" }}>
+        <button onClick={() => handlePageChange(currentPage - 1)} className="border p-2">
           Anterior
         </button>
       </If>
@@ -43,7 +43,7 @@ export default function Pagination() {
           {lastPage}
         </span>
       </div>
-      <button onClick={() => handlePageChange(currentPage + 1)} className="border p-2" style={{ borderRadius: "20%" }}>Próxima</button>
+      <button onClick={() => handlePageChange(currentPage + 1)} className="border p-2">Próxima</button>
     </div>
   );
 }

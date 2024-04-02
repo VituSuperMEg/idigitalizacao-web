@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, Home, HomeIcon } from "lucide-react";
 import { If } from 'if-component-ts';
 import Table from "./Table";
 import Buttons from "./Buttons";
@@ -37,6 +37,7 @@ export default function Crud({
     <div>
       <header className="flex items-center justify-between" style={{ marginTop: -70 }}>
         <div className="flex items-center">
+          <Home className="cursor-pointer mr-3" size={20} />
           <h2>{display?.displayName}</h2>
           <ChevronRight />
           <h2>{display?.displayMenu}</h2>
