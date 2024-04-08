@@ -1,4 +1,3 @@
-import { InputHTMLAttributes, SelectHTMLAttributes } from "react";
 
 interface Option {
   label: string;
@@ -9,7 +8,8 @@ interface ISelect extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: Option[];
   defaultOption?: string;
   required?: boolean;
-  handleChange : any;
+  handleChange?: any;
+  className?: string;
 }
 
 export default function Select({
@@ -18,12 +18,15 @@ export default function Select({
   label,
   required,
   handleChange,
+  className,
   ...rest
 }: ISelect) {
   return (
     <label className="flex flex-col">
-      {label} <span className="text-red-500">{required && "*"}</span>
-      <select className="border p-4 rounded-lg outline-none cursor-pointer" onChange={handleChange} {...rest}>
+       <header className="flex items-center gap-1">
+       {label} <span className="text-red-500">{required && "*"}</span>
+       </header>
+      <select className={`border p-4 rounded-lg outline-none cursor-pointer ${className}`} onChange={handleChange} {...rest}>
         {defaultOption && (<option>{defaultOption}</option>)}
         {options.map((option: Option) => (
           <option key={option.value} value={option.value}>
