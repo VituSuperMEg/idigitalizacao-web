@@ -6,6 +6,7 @@ export interface User {
 }
 interface Auth {
   isAuthenticated: boolean;
+  clinte : string;
   user : User;
 }
 
@@ -15,6 +16,7 @@ export const useAuth = create<Auth>((set) => {
     user : {
       name : 'Vitor Emanuel',
       image :''
-    }
+    },
+    clinte : ""
   }
 })

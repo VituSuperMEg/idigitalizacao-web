@@ -28,7 +28,7 @@ export default function Select({
        </header>
       <select className={`border p-4 rounded-lg outline-none cursor-pointer ${className}`} onChange={handleChange} {...rest}>
         {defaultOption && (<option>{defaultOption}</option>)}
-        {options.map((option: Option) => (
+        {options && options.map((option: Option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
