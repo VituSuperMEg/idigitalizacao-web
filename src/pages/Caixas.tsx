@@ -33,7 +33,11 @@ function Form() {
     try {
       const response = await api.get(`/caixas/${id}`);
       const data = response.data.data[0];
-      Object.keys(data).forEach((key: keyof Caixas) => {
+  
+      // Mapear manualmente as chaves
+      const keys: (keyof Caixas)[] = ['descricao'];
+  
+      keys.forEach((key: keyof Caixas) => {
         setValue(key, data[key]);
       });
     } catch (error) {
