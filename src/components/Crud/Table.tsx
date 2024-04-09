@@ -6,7 +6,7 @@ import ToolTip from "../Tooltip/Tooltip";
 import { useCrud } from "@/store/crud";
 
 interface ITable {
-  fields: [{ head: string; body: string }];
+  fields: { head: string; body: string }[];
   endPoint: string;
 }
 export default function Table({ fields, endPoint }: ITable) {

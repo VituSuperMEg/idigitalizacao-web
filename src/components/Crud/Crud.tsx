@@ -14,14 +14,12 @@ interface ICrud {
     displayName: string;
     displayMenu: string;
   }
-  fieldsTable: [
-    { head: string, body: string }
-  ];
+  fieldsTable: { head: string, body: string }[];
   form: ReactNode;
   endPoint: string;
-  Type : any;
-  Schema : any;
-  onSubmit : (values : any) => void;
+  Type?: any;
+  Schema?: any;
+  onSubmit?: (values : any) => void;
 }
 export default function Crud({
   display,
