@@ -19,7 +19,7 @@ const EntidadesSchema = z.object({
   entidades: z.string().nonempty('Por favor, selecione uma entidade'),
 });
 
-export function Entidades() {
+export default function Entidades() {
   const {
     register,
     handleSubmit,
