@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   return (
     <main>
-      <Login />
+      <Panel />
       <ToastContainer />
     </main>
   );
