@@ -1,10 +1,10 @@
 import { HTMLAttributes, ReactNode } from "react";
-import { Control, Controller, FieldErrors, FieldValues } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import InputMask from 'react-input-mask';
 
-interface IInput<T> extends HTMLAttributes<HTMLInputElement>{
-  name: keyof T;
-  control: Control;
+interface IInput<T extends FieldValues> extends HTMLAttributes<HTMLInputElement>{
+  name:  Path<T>;
+  control: Control<T>;
   mask?: any;
   label: string;
   errors: ReactNode;
@@ -12,7 +12,7 @@ interface IInput<T> extends HTMLAttributes<HTMLInputElement>{
   required?: boolean;
 }
 
-export function Input<T>({
+export function Input<T extends FieldValues>({
   name,
   control,
   mask,
@@ -25,7 +25,7 @@ export function Input<T>({
 
   return (
     <Controller
-      name={name as string}
+      name={name}
       control={control}
       render={({ field }) => (
         <label className={className}>

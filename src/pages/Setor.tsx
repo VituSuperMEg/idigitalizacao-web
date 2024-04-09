@@ -28,19 +28,23 @@ function Form() {
   const id = useCrud(state => state.id);
   const view = useCrud(state => state.view);
 
+  async function fillFormFields() {
+    try {
+      const response = await api.get(`/setor/${id}`);
+      const data = response.data.data[0];
+      const keys: (keyof Setor)[] = ['descricao'];
+  
+      keys.forEach((key: keyof Setor) => {
+        setValue(key, data[key]);
+      });
+    } catch (error) {
+      console.error("Erro ao preencher os campos do formulário:", error);
+    }
+  }
+
   useEffect(() => {
     if (view === "edit") {
-      async function fillFormFields() {
-        try {
-          const response = await api.get(`/setor/${id}`);
-          const data = response.data.data[0];
-          Object.keys(data).forEach((key: keyof Setor) => {
-            setValue(key, data[key]);
-          });
-        } catch (error) {
-          console.error("Erro ao preencher os campos do formulário:", error);
-        }
-      }
+    
       fillFormFields();
     }
   }, [view]);

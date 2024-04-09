@@ -60,24 +60,27 @@ function Form() {
   const [banco, setBanco] = useState("");
   const [locationAndCep, setLocationAndCep] = useState({});
 
+  async function fillFormFields() {
+    try {
+      const response = await api.get(`/credores/${id}`);
+      const data = response.data.data[0];
+      const keys: (keyof Credores)[] = ['cpf']
+
+      keys.forEach((key : keyof Credores) => {
+        setValue(key, data[key]);
+        setBanco(data.banco);
+        setTipo_documento(data.tipo_documento);
+      })
+    } catch (error) {
+      console.error("Erro ao preencher os campos do formulário:", error);
+    }
+  }
+
   useEffect(() => {
     if (view === "edit") {
-      async function fillFormFields() {
-        try {
-          const response = await api.get(`/credores/${id}`);
-          const data = response.data.data[0];
-          Object.keys(data).forEach((key: keyof Credores) => {
-            setValue(key, data[key]);
-            setBanco(data.banco);
-            setTipo_documento(data.tipo_documento);
-          });
-        } catch (error) {
-          console.error("Erro ao preencher os campos do formulário:", error);
-        }
-      }
       fillFormFields();
     }
-  }, [view]);
+  }, [view, id, setValue, api]);
 
   async function onSubmit(values: any) {
     console.log(values)
@@ -167,12 +170,12 @@ function Form() {
         </label>
         <label className="w-full">
           Logradouro
-          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("logradouro")} value={locationAndCep.logradouro}/>
+          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("logradouro")} />
           {errors.logradouro && <p className="text-red-500">{errors.logradouro.message}</p>}
         </label>
         <label>
           Cidade
-          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cidade")} value={locationAndCep.localidade} />
+          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("cidade")} />
           {errors.logradouro && <p className="text-red-500">{errors.logradouro.message}</p>}
         </label>
         <label>
@@ -182,7 +185,7 @@ function Form() {
         </label>
         <label>
           Bairro
-          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("bairro")} value={locationAndCep.bairro}/>
+          <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("bairro")} />
           {errors.bairro && <p className="text-red-500">{errors.bairro.message}</p>}
         </label>
       </div>

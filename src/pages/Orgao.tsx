@@ -15,7 +15,9 @@ const OrgaoSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
   responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
   cpf: z.string().nonempty("o cpf é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }).max(11, { message: "o maximo é 11 cararecteres" }),
+  num_expediente : z.number()
 });
+
 
 function Form() {
   const {
@@ -31,19 +33,23 @@ function Form() {
   const id = useCrud(state => state.id);
   const view = useCrud(state => state.view);
 
+  async function fillFormFields() {
+    try {
+      const response = await api.get(`/orgaos/${id}`);
+      const data = response.data.data[0];
+      const keys: (keyof Orgao)[] = ['descricao'];
+  
+      keys.forEach((key: keyof Orgao) => {
+        setValue(key, data[key]);
+      });
+    } catch (error) {
+      console.error("Erro ao preencher os campos do formulário:", error);
+    }
+  }
+
   useEffect(() => {
     if (view === "edit") {
-      async function fillFormFields() {
-        try {
-          const response = await api.get(`/orgaos/${id}`);
-          const data = response.data.data[0];
-          Object.keys(data).forEach((key: keyof Orgao) => {
-            setValue(key, data[key]);
-          });
-        } catch (error) {
-          console.error("Erro ao preencher os campos do formulário:", error);
-        }
-      }
+     
       fillFormFields();
     }
   }, [view]);
@@ -93,11 +99,7 @@ function Form() {
           errors={errors.cpf && <p className="text-red-500">{errors.cpf.message}</p>}
         />
       </div>
-      <Input
-        label="Num_expediente"
-        control={control}
-        {...register("cpf")}
-      />
+     
       <ButtonsCrud btnNew />
     </form>
   )
