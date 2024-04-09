@@ -8,7 +8,7 @@ interface HTTP {
   id? : number;
 }
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:1001/api"
+  baseURL: "http://127.0.0.1:8080/api"
 })
 
 export const submit = async ({ endPoint, values }: HTTP) => {

@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 
 interface IInput<T> extends HTMLAttributes<HTMLInputElement>{
   name: keyof T;
-  control: Control<T>;
+  control: Control;
   mask?: any;
   label: string;
   errors: ReactNode;
