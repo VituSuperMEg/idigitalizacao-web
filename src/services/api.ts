@@ -5,7 +5,6 @@ import { error } from 'message-next';
 interface ResponseData {
   success: boolean;
   error: string;
-  // Outras propriedades conforme necessário
 }
 
 interface HTTP {
@@ -15,7 +14,7 @@ interface HTTP {
 }
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:8080/api"
+  baseURL: "http://127.0.0.1:1001/api"
 })
 
 export const submit = async ({ endPoint, values }: HTTP) => {

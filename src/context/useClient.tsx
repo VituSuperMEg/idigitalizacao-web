@@ -1,38 +1,34 @@
 "use client";
-import { CHILDREN, OPTIONS } from "@/interfaces/interfaces";
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'; // Importe useNavigation em vez de useRouter
 import { api } from "@/services/api";
-import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
-
-interface IClient{
-  estados: [
-    { label : "", value : ""}
-  ];
-  municipios: [
-    { label : "", value : ""}
-  ];
-  entidades : [
-    { label : "", value : ""}
-  ];
+export interface IClient {
+  estados: { label: string; value: string }[];
+  municipios: { label: string; value: string }[];
+  entidades: { label: string; value: string }[];
   client: string;
-  setEstadoId: (event : any) => void;
-  setMunicipioId: (event : any) => void;
-  setEntidadeId: (event : any) => void;
+  setEstadoId: (event: any) => void;
+  setMunicipioId: (event: any) => void;
+  setEntidadeId: (event: any) => void;
+  codIbge: string;
+  loggerClient: () => void;
 }
+
 const ClientContext = createContext({} as IClient);
 
-export const ClientProvider = ({ children } : CHILDREN) => {
-
+export const ClientProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [estado_id, setEstadoId] = useState("");
   const [municipio_id, setMunicipioId] = useState("");
   const [entidade_id, setEntidadeId] = useState("");
+  const [estados, setEstados] = useState<{ label: string; value: string }[]>([]);
+  const [municipios, setMunicipios] = useState<{ label: string; value: string }[]>([]);
+  const [entidades, setEntidades] = useState<{ label: string; value: string }[]>([]);
+  const [client, setClient] = useState("");
+  const [codIbge, setCodIbge] = useState("");
 
-   const [estados, setEstados] = useState<OPTIONS[]>([]);
-   const [municipios, setMunicipios] = useState<OPTIONS[]>([]);;
-   const [entidades, setEntidades] = useState<OPTIONS[]>([]);;
-   const [client, setClient] = useState("");
-
-   useEffect(() => {
+  useEffect(() => {
     async function getEstados() {
       const res = await api.get("estados");
       setEstados(res.data.data)
@@ -65,14 +61,28 @@ export const ClientProvider = ({ children } : CHILDREN) => {
     console.log(res.data.data)
     // setEntidades(res.data.data)
   }
+
+  async function loggerClient() {
+    setCodIbge(entidades[0]?.value || "");
+    setClient(entidades[0]?.label || "");
+  }
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (codIbge && codIbge !== '') {
+      router.push(`/login/${codIbge}`);
+    }
+  }, [codIbge, router]);
+
   useEffect(() => {
     if(entidade_id !== '') {
       getEntidade();
     }
   }, [entidade_id]);
 
-   return (
-     <ClientContext.Provider
+  return (
+    <ClientContext.Provider
       value={{
         entidades,
         client,
@@ -80,15 +90,17 @@ export const ClientProvider = ({ children } : CHILDREN) => {
         municipios,
         setEntidadeId,
         setEstadoId,
-        setMunicipioId
+        setMunicipioId,
+        loggerClient,
+        codIbge
       }}
-     >
+    >
       {children}
-     </ClientContext.Provider>
-   )
+    </ClientContext.Provider>
+  )
 }
 
-export function useClientData () {
+export function useClientData (): IClient {
   const context = useContext(ClientContext);
 
   if(!context) {
