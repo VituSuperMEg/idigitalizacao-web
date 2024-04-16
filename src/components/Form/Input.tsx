@@ -10,6 +10,7 @@ interface IInput<T extends FieldValues> extends HTMLAttributes<HTMLInputElement>
   errors: ReactNode;
   className?: any;
   required?: boolean;
+  type?: string;
 }
 
 export function Input<T extends FieldValues>({
@@ -20,6 +21,7 @@ export function Input<T extends FieldValues>({
   errors,
   className,
   required,
+  type,
   ...rest
 }: IInput<T>) {
 
@@ -33,6 +35,7 @@ export function Input<T extends FieldValues>({
           <InputMask
             className="border rounded-md p-3 w-full outline-none"
             mask={mask}
+            type={type}
             {...field}
             {...rest}
           />

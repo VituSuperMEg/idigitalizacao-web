@@ -1,22 +1,23 @@
-"use client";
-import { Button } from '@/components/ui/button';
-import { api } from '@/services/api';
 import { useEffect, useState } from 'react';
-import { Compass, MailBox } from 'solar-icons-react';
+import { Button } from '@/components/ui/button';
 import Select from '@/components/Form/Select';
 import { useAuth } from '@/store/auth';
-import { OPTIONS } from '@/interfaces/interfaces';
 import { getCidades, getEntidades, getEstados } from '@/providers/providers';
+import { MailBox } from 'solar-icons-react';
+
+interface Entidade {
+  label: string;
+  value: string;
+}
 
 export default function Entidades() {
-
   const setClient = useAuth(state => state.setClient);
   const client = useAuth(state => state.client);
 
-  const [estados, setEstados] = useState([]);
-  const [municipios, setMunicipios] = useState([]);
-  const [entidades, setEntidades] = useState([]);
-  const [e, setE] = useState([]);
+  const [estados, setEstados] = useState<Entidade[]>([]);
+  const [municipios, setMunicipios] = useState<Entidade[]>([]);
+  const [entidades, setEntidades] = useState<Entidade[]>([]);
+  const [e, setE] = useState<Entidade[]>([]);
 
   useEffect(() => {
     async function obterEstados() {
@@ -90,7 +91,6 @@ export default function Entidades() {
         <Button variant="default" className='h-12' type='button' onClick={() => setClient({
           cod_ibge: e[0]?.value
         })}>Entrar</Button>
-
       </form>
     </div>
   )
