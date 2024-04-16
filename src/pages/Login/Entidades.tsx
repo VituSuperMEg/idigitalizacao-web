@@ -12,7 +12,6 @@ export default function Entidades() {
 
   const setClient = useAuth(state => state.setClient);
   const client = useAuth(state => state.client);
-  const loggerClient = useAuth(state => state.loggerClient);
 
   const [estados, setEstados] = useState([]);
   const [municipios, setMunicipios] = useState([]);
@@ -88,7 +87,9 @@ export default function Entidades() {
           }}
           required
         />
-        <Button variant="default" className='h-12' type='button' onClick={() => loggerClient(e[0]?.value)}>Entrar</Button>
+        <Button variant="default" className='h-12' type='button' onClick={() => setClient({
+          cod_ibge: e[0]?.value
+        })}>Entrar</Button>
 
       </form>
     </div>

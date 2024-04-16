@@ -18,8 +18,6 @@ export interface AuthState {
   user: User;
   client: Client;
   setClient: (newClient: Partial<Client>) => void;
-  loggerClient : (cod : string) => void;
-
 }
 
 export const useAuth = create<AuthState>((set) => ({
@@ -31,7 +29,7 @@ export const useAuth = create<AuthState>((set) => ({
   client: {
     estado: '',
     municipio: '',
-    entidade : '',
+    entidade: '',
     cod_ibge: ''
   },
   setClient: (newClient) =>
@@ -42,12 +40,4 @@ export const useAuth = create<AuthState>((set) => ({
         ...newClient
       }
     })),
-    loggerClient: (cod) =>
-      set((state) => ({
-        ...state,
-        client : {
-          ...state.client,
-          cod_ibge : cod
-        }
-      }))
 }));
