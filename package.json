@@ -34,7 +34,7 @@
     "react-input-mask": "^2.0.4",
     "react-paginate": "^8.2.0",
     "react-toastify": "^10.0.4",
-    "solar-icons-react": "^0.0.18",
+    "solar-icons-react": "^0.0.20",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4",

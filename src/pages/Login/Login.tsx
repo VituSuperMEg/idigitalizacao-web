@@ -1,28 +1,28 @@
 "use client";
-import { useClientData } from '@/context/useClient';
 import { If } from "if-component-ts";
 import Entidades from "./Entidades";
+import { useAuth } from "@/store/auth";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Login() {
-  const { client, codIbge} = useClientData();
+  const client = useAuth(state => state.client);
 
-  console.log(client)
+  console.log(client.cod_ibge)
+  const router = useRouter();
+
+  useEffect(() => {
+    if (client.cod_ibge && client.cod_ibge !== '') {
+      router.push(`/login/${client?.cod_ibge}`);
+    }
+  }, [client.cod_ibge, router]);
+
 
   return (
     <>
-      <If test={client}>
-        <div className='centralizer'>
-          <h2>Login</h2>
-           <p>{client}</p>
-           <p>{codIbge}</p>
-        </div>
-      </If>
-      <If test={!client}>
-        <Entidades />
-      </If>
+      <Entidades />
     </>
-
   )
 }

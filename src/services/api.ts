@@ -11,11 +11,30 @@ interface HTTP {
   endPoint: string;
   values?: any;
   id?: number;
+  params? : any;
 }
 
 export const api = axios.create({
   baseURL: "http://127.0.0.1:1001/api"
 })
+
+export const getDataParams = async ({ endPoint , params }:HTTP) => {
+  try {
+    const response = await api.get(`${endPoint}`, params);
+    return response.data;
+  }catch (err) {
+    if (axios.isAxiosError(err)) {
+      const axiosError = err as AxiosError;
+      if (axiosError.response) {
+        error((axiosError.response.data as ResponseData).error, "Erro");
+      } else {
+        error("Erro desconhecido", "Erro");
+      }
+    } else {
+      error("Erro desconhecido", "Erro");
+    }
+  }
+}
 
 export const submit = async ({ endPoint, values }: HTTP) => {
   try {

@@ -8,3 +8,8 @@ export interface OPTIONS {
   label?: string[];
   value?: string[];
 }
+export interface OBJECTCLIENT {
+  codigoIbge : {
+    codigo_ibge: string;
+  };
+}
