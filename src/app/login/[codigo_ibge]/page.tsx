@@ -54,7 +54,7 @@ const CodigoIBGEPage = () => {
           />
           <p className="cursor-pointer text-zinc-400">esqueci minha senha</p>
         </div>
-        <Button className="w-full mt-5 h-9" type="submit">
+        <Button className="w-full mt-5 h-12" variant="default"  type="submit">
           Entrar
         </Button>
       </div>
