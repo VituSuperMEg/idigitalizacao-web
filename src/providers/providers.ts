@@ -17,28 +17,9 @@ export async function getEntidades(municipio_id: string) {
   });
   return res.data.data;
 }
-
-// async function getEntidade() {
-//   const res = await api.get(`estados/cidades/entidades/${entidade_id}`);
-//   console.log(res.data.data)
-//   // setEntidades(res.data.data)
-// }
-
-// async function loggerClient() {
-//   setCodIbge(entidades[0]?.value || "");
-//   setClient(entidades[0]?.label || "");
-// }
-
-// const router = useRouter();
-
-// useEffect(() => {
-//   if (codIbge && codIbge !== '') {
-//     router.push(`/login/${codIbge}`);
-//   }
-// }, [codIbge, router]);
-
-// useEffect(() => {
-//   if(entidade_id !== '') {
-//     getEntidade();
-//   }
-// }, [entidade_id]);
+export async function getDB(entidade_id: string) {
+  if(entidade_id !== "") {
+    const res = await api.get(`entidades/${entidade_id}`);
+    return res.data.data;
+  }
+}

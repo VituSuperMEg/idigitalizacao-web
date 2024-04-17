@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Select from '@/components/Form/Select';
 import { useAuth } from '@/store/auth';
-import { getCidades, getEntidades, getEstados } from '@/providers/providers';
+import { getCidades, getDB, getEntidades, getEstados } from '@/providers/providers';
 import { MailBox } from 'solar-icons-react';
 
 interface Entidade {
@@ -13,6 +13,7 @@ interface Entidade {
 export default function Entidades() {
   const setClient = useAuth(state => state.setClient);
   const client = useAuth(state => state.client);
+  const setEntidade = useAuth(state => state.setEntidade);
 
   const [estados, setEstados] = useState<Entidade[]>([]);
   const [municipios, setMunicipios] = useState<Entidade[]>([]);
@@ -40,9 +41,21 @@ export default function Entidades() {
       const e = await getEntidades(client.municipio);
       setE(e)
       setEntidades(e);
+      setClient({
+        entidade: e[0]?.value
+      })
     }
     obterEntidade();
   }, [client.municipio]);
+
+
+  useEffect(() => {
+    async function obterEntidade() {
+      const e = await getDB(client.entidade);
+      setEntidade(e);
+    }
+    obterEntidade();
+  }, [client.entidade, setEntidade]);
 
   return (
     <div className="centralizer bg-white p-20 rounded-lg">

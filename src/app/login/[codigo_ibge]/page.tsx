@@ -1,10 +1,9 @@
 "use client";
 import { Input } from "@/components/Form/Input";
 import { Button } from "@/components/ui/button";
-import { OBJECTCLIENT } from "@/interfaces/interfaces";
-import { api, getDataParams } from "@/services/api";
+import { getDB } from "@/providers/providers";
+import { submit } from "@/services/api";
 import { useAuth } from "@/store/auth";
-import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { MailBox } from "solar-icons-react";
@@ -23,42 +22,44 @@ const CodigoIBGEPage = () => {
     handleSubmit
   } = useForm<Login>();
 
+  const entidade = useAuth(state => state.entidade);
+  const client = useAuth(state => state.client);
+
   async function onSubmit(values : Login) {
-    console.log(values)
+    await submit({
+      endPoint : "login",
+      values : {
+        login : values.usuario
+      }
+    });
   }
+
   return (
-    <form className="centralizer bg-white h-4/6 w-2/6 rounded-lg p-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex h-full flex-col justify-center items-center p-12">
-        <header className='flex items-center gap-2 mb-9 justify-center'>
-          <MailBox size={25} />
-          <h2>W2E - Digitalização</h2>
+    <div className="centralizer bg-white p-20 rounded-lg">
+      <form className='flex flex-col w-full gap-7' onSubmit={handleSubmit(onSubmit)}>
+        <header className='flex flex-col text-center items-center gap-2 mb-9 justify-center'>
+        <MailBox size={25} />
+          {entidade.entidade} <br />
+          {entidade.estado} - {entidade.municipio}
         </header>
         <Input
           control={control}
-          label="Usuário"
           name="usuario"
-          className="w-full"
+          label="Usuário"
           required
-          errors={errors.usuario && <p className="text-red-500">{errors.usuario.message}</p>}
+          errors={errors && <p>{errors.usuario?.message}</p>}
         />
-        <div className="w-full flex flex-col items-end"
-        >
-          <Input
-            control={control}
-            label="Senha"
-            name="senha"
-            type="password"
-            className="w-full mt-4"
-            required
-            errors={errors.senha && <p className="text-red-500">{errors.senha.message}</p>}
-          />
-          <p className="cursor-pointer text-zinc-400">esqueci minha senha</p>
-        </div>
-        <Button className="w-full mt-5 h-12" variant="default"  type="submit">
-          Entrar
-        </Button>
-      </div>
-    </form>
+        <Input
+          control={control}
+          name="senha"
+          label="Senha"
+          required
+          type="password"
+          errors={errors && <p>{errors.usuario?.message}</p>}
+        />
+        <Button variant="default" className='h-12' type='submit'>Entrar</Button>
+      </form>
+    </div>
   );
 };
 
