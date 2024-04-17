@@ -25,6 +25,7 @@ const CodigoIBGEPage = () => {
 
   const entidade = useAuth(state => state.entidade);
   const client = useAuth(state => state.client);
+  const setUser = useAuth(state => state.setUser);
 
   async function onSubmit(values: Login) {
     const token = await api.post("/login", {
@@ -32,6 +33,7 @@ const CodigoIBGEPage = () => {
       senha: values.senha,
     })
     localStorage.setItem("token", token.data.access_token);
+    setUser(token.data.user);
   }
   const router = useRouter();
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
