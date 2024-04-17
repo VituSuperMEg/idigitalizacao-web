@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const client = useAuth(state => state.client);
 
-  console.log(client.cod_ibge)
   const router = useRouter();
 
   useEffect(() => {
