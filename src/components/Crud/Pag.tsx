@@ -1,10 +1,19 @@
-import { useCrud } from '@/store/crud';
-import { If } from 'if-component-ts';
-import React, { useEffect, useState } from 'react';
+import {
+  Pagination as P,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { useCrud } from "@/store/crud";
+import { If } from "if-component-ts";
+import { useEffect, useState } from "react";
 
 
 export default function Pagination() {
-  // react
+
   const [total, setTotal] = useState(10);
 
   // zustand
@@ -25,25 +34,23 @@ export default function Pagination() {
 
   }, [currentPage]);
 
+
+
   return (
-    <div className="flex items-center gap-3 mt-2" style={{ float: 'left' }}>
-      <If test={currentPage > 1}>
-        <button onClick={() => handlePageChange(currentPage - 1)} className="border p-2">
-          Anterior
-        </button>
-      </If>
-      mostrando {total} de {totalPages}
-      <div className="bg-slate-500 flex items-center justify-center" style={{ width: 30, height: 30, borderRadius: '50%' }}>
-        <span className="text-white">
-          1
-        </span>
-      </div>
-      <div className="bg-slate-500 flex items-center justify-center" style={{ width: 30, height: 30, borderRadius: '50%' }}>
-        <span className="text-white">
-          {lastPage}
-        </span>
-      </div>
-      <button onClick={() => handlePageChange(currentPage + 1)} className="border p-2">Próxima</button>
-    </div>
+    <P style={{ float: 'left' }}>
+      <PaginationContent>
+        <If test={currentPage > 1}>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+        </If>
+        <PaginationItem onClick={() => handlePageChange(currentPage - 1)}>
+          <PaginationLink href="#" isActive>1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem onClick={() => handlePageChange(currentPage - 1)}>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </P>
   );
 }

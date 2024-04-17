@@ -8,6 +8,7 @@ import './crud.css';
 import { useCrud } from "@/store/crud";
 import Pagination from "./Pag";
 import Form from "./Form";
+import { BreadcrumbComponent } from "./BreadCrumb";
 
 interface ICrud {
   display: {
@@ -31,14 +32,14 @@ export default function Crud({
   Type
 }: ICrud) {
   const view = useCrud(state => state.view);
+
   return (
     <div>
       <header className="flex items-center justify-between" style={{ marginTop: -70 }}>
         <div className="flex items-center">
-          <Home className="cursor-pointer mr-3" size={20} />
-          <h2>{display?.displayName}</h2>
-          <ChevronRight />
-          <h2>{display?.displayMenu}</h2>
+          <BreadcrumbComponent
+            display={display}
+          />
         </div>
         <Buttons />
       </header>

@@ -1,5 +1,6 @@
 import { useCrud } from "@/store/crud";
 import { ArrowLeft, CreativeCommons, Plus, Search } from "lucide-react";
+import { Button } from "../ui/button";
 
 type Button = {
   view: string;
@@ -12,16 +13,16 @@ export default function Buttons() {
   return (
     <div>
       {view === 'list' && (
-        <button 
-         className="bg-slate-400 flex gap-2 p-3 rounded-lg text-white"
+        <Button
+         className="flex gap-2 h-12 p-3 rounded-lg text-white"
          onClick={() => setView('new')}
-        ><Plus /> Novo </button>
+        ><Plus /> Novo </Button>
       )}
       {(view === "new" || view === "edit") && (
-         <button 
-         className="bg-slate-400 flex gap-2 p-3 rounded-lg text-white"
+         <Button
+         className="flex gap-2 h-12 p-3 rounded-lg text-white"
          onClick={() => setView('list')}
-        ><Search /> Buscar </button>
+        ><Search /> Buscar </Button>
       )}
     </div>
   )

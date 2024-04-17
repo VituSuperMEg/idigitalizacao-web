@@ -5,6 +5,7 @@ import { File as Rel } from 'lucide-react';
 import { Archive as Document } from 'lucide-react';
 import { Settings as Set } from 'lucide-react';
 import MainInfo from './MainInfo';
+import { MailBox } from 'solar-icons-react';
 
 interface ISidebarMenu {
   onCapturePageChange: (page: string) => void;
@@ -15,7 +16,7 @@ export function SidebarMenu({
   return (
     <ul className="bg-white w-44 flex flex-col p-2 justify-between m-4 rounded-lg">
       <div>
-       <p>🗃️ {""} Idigitalizacao</p>
+       <p className='flex gap-4 items-center'><MailBox size={20}/> {""} Idigitalizacao</p>
         <Accordion.Root type="multiple" className='mt-16'>
           {/* Cadastro */}
           <Accordion.Item className="w-ful" value="item-1">
