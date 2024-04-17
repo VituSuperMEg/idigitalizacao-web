@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
 
-  const token = localStorage.getItem('token');
 
   return (
       <main>

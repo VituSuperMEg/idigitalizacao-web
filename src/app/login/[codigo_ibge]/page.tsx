@@ -25,7 +25,6 @@ const CodigoIBGEPage = () => {
 
   const entidade = useAuth(state => state.entidade);
   const client = useAuth(state => state.client);
-  const token = localStorage.getItem('token');
 
   async function onSubmit(values: Login) {
     const token = await api.post("/login", {
@@ -35,12 +34,15 @@ const CodigoIBGEPage = () => {
     localStorage.setItem("token", token.data.access_token);
   }
   const router = useRouter();
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   useEffect(() => {
-      if(token) {
-        router.push(`/painel/${client?.cod_ibge}`);
+      if (token) {
+          router.push(`/painel/${client?.cod_ibge}`);
       }
   }, [token, router]);
+
+
 
   return (
     <div className="centralizer bg-white p-20 rounded-lg">
