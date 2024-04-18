@@ -1,6 +1,8 @@
+import { TOKEN_WEB } from '@/constraint/web';
+import { api } from '@/services/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
+import { error as msgError } from 'message-next';
 
 export interface User {
   acl_grupo_id: string;
@@ -42,11 +44,15 @@ export interface AuthState {
   setClient: (newClient: Partial<Client>) => void;
   setEntidade: (newEntidade: Partial<Entidade>) => void;
   setUser: (newUser: Partial<User>) => void;
+  logout : () => void;
+  onLogin: (login : string, senha: string) => Promise<void>;
 }
+
+const isAuthenticated = () => localStorage.getItem(TOKEN_WEB) !== null;
 
 export const useAuth = create(persist<AuthState>(
   set => ({
-    isAuthenticated: false,
+    isAuthenticated: isAuthenticated(),
     user: {} as User,
     client: {} as Client,
     entidade: {} as Entidade,
@@ -74,6 +80,25 @@ export const useAuth = create(persist<AuthState>(
           ...newEntidade
         }
       })),
+      onLogin : async (login : string, senha : string) => {
+         try {
+          const token = await api.post("/login", {
+            login,
+            senha
+          })
+          if (token.data) {
+            set({ isAuthenticated: true, user: token.data.user });
+            localStorage.setItem(TOKEN_WEB, token.data.access_token);
+          }
+         }catch(error : any) {
+          msgError(error.response.data.non_field_errors[0]);
+         }
+      },
+    logout: () => {
+        localStorage.removeItem(TOKEN_WEB);
+        localStorage.removeItem("zustand-auth");
+        set({ isAuthenticated: false });
+      },
   }),
   {
     name: 'zustand-auth',

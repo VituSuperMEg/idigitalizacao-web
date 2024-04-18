@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/Form/Input";
 import { Button } from "@/components/ui/button";
+import { TOKEN_WEB } from "@/constraint/web";
 import { getDB } from "@/providers/providers";
 import { api, submit } from "@/services/api";
 import { useAuth } from "@/store/auth";
@@ -25,26 +26,19 @@ const CodigoIBGEPage = () => {
 
   const entidade = useAuth(state => state.entidade);
   const client = useAuth(state => state.client);
-  const setUser = useAuth(state => state.setUser);
+  const onLogin = useAuth(state => state.onLogin);
 
   async function onSubmit(values: Login) {
-    const token = await api.post("/login", {
-      login: values.usuario,
-      senha: values.senha,
-    })
-    localStorage.setItem("token", token.data.access_token);
-    setUser(token.data.user);
+    await onLogin(values.usuario, values.senha);
   }
   const router = useRouter();
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const token = typeof window !== 'undefined' ? localStorage.getItem(TOKEN_WEB) : null;
 
   useEffect(() => {
-      if (token) {
-          router.push(`/painel/${client?.cod_ibge}`);
-      }
+    if (token) {
+      router.push(`/painel/${client?.cod_ibge}`);
+    }
   }, [token, router]);
-
-
 
   return (
     <div className="centralizer bg-white p-20 rounded-lg">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SidebarMenu } from "./components/SidebarMenu";
 
 import OrgaoPage from "@/pages/Orgao";
@@ -16,6 +16,10 @@ import CredoresPage from "@/pages/Credores";
 
 import './panel.css';
 import MainInfo from "./components/MainInfo";
+import { useAuth } from "@/store/auth";
+import { TOKEN_WEB } from "@/constraint/web";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
@@ -49,6 +53,21 @@ export function Panel() {
     setPage(newPage);
   };
 
+  const client = useAuth(state => state.client);
+  const router = useRouter();
+  const isAuthenticated = useAuth(state => state.isAuthenticated);
+
+  useEffect(() => {
+    console.log(isAuthenticated)
+    if(isAuthenticated === false) {
+      router.push(`/login/${client.cod_ibge}`);
+      toast.error("Sua sessão expirou. Por favor, faça login novamente.", {
+        onClose: () => {
+          // console.log("Usuário foi redirecionado para a página de login.");
+        }
+      });
+    }
+  }, [isAuthenticated, router, client.cod_ibge]);
 
   return (
     <div className="h-screen flex">

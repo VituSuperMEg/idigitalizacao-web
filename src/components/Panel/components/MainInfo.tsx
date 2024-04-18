@@ -9,6 +9,8 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 export default function MainInfo() {
 
   const user = useAuth(state => state.user);
+  const logout = useAuth(state => state.logout);
+
   return (
     <div className="avatar">
       <DropdownMenu.Root>
@@ -28,8 +30,8 @@ export default function MainInfo() {
           <DropdownMenu.Item  className="flex items-center gap-5 border-0 outline-none cursor-pointer hover:bg-slate-50">
             <MessageSquare className="text-zinc-500" /> Notificações
           </DropdownMenu.Item>
-          <DropdownMenu.Item  className="flex items-center gap-5 border-0 outline-none text-red-500 cursor-pointer hover:bg-slate-50">
-            <LogOut className="text-red-500" /> Sair
+          <DropdownMenu.Item  onClick={() => logout()} className="flex items-center gap-5 border-0 outline-none text-red-500 cursor-pointer hover:bg-slate-50">
+            <LogOut className="text-red-500"  /> Sair
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
