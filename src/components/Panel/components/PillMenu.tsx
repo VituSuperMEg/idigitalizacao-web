@@ -20,7 +20,7 @@ export default function PillMenu({
         <span>Dashboard</span>
       </div>
       {pages?.map(item => (
-        <div key={item} className={`${selectedPage === item ? 'bg-slate-500' : 'bg-white'} shadow-lg p-3 rounded-md cursor-pointer ${selectedPage === item ? 'text-white' : 'text-black'} ${selectedPage !== item ? 'hover:bg-slate-300' : 'hover:bg-slate-500'}`} onClick={() => setPage(item)}>
+        <div key={item} className={`${selectedPage === item ? 'bg-primary' : 'bg-white'} shadow-lg p-3 rounded-md cursor-pointer ${selectedPage === item ? 'text-white' : 'text-black'} ${selectedPage !== item ? 'hover:bg-slate-300' : 'hover:bg-primary'}`} onClick={() => setPage(item)}>
           <div className="flex gap-2">
             <span>{item}</span>
             <X size={15} className="hover:text-red-400" onClick={() => onRemovePage(item)} />
