@@ -70,6 +70,14 @@ export default function Table({ fields, endPoint }: ITable) {
       <If test={loading}>
         <div className="m-11">
           <Skeleton className="w-full h-[20px] rounded-full" />
+          <div className="space-y-2 mt-4">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+          </div>
         </div>
       </If>
       <If test={!loading}>

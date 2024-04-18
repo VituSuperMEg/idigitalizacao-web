@@ -35,9 +35,8 @@ export default function Pagination() {
   }, [currentPage]);
 
 
-
   return (
-    <P style={{ float: 'left' }}>
+    <P className="flex justify-start mt-4">
       <PaginationContent>
         <If test={currentPage > 1}>
           <PaginationItem>
