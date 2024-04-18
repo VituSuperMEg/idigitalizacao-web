@@ -2,8 +2,15 @@ import { api, del } from "@/services/api";
 import { Pencil, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { confirmationDeleteReturn } from 'message-next';
-import ToolTip from "../Tooltip/Tooltip";
 import { useCrud } from "@/store/crud";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+import { Skeleton } from "@/components/ui/skeleton"
 
 import {
   Table as T,
@@ -14,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { toast } from "react-toastify";
+import { If } from "if-component-ts";
 
 interface ITable {
   fields: { head: string; body: string }[];
@@ -22,6 +30,7 @@ interface ITable {
 export default function Table({ fields, endPoint }: ITable) {
 
   const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // zustand
   const setId = useCrud(state => state.setId);
@@ -37,13 +46,13 @@ export default function Table({ fields, endPoint }: ITable) {
     setTotalPages(list.data.data.total);
     setLastPage(list.data.data.last_page);
     setData(list.data.data.data);
+    setLoading(false)
   }
 
   async function remove(id: number) {
     const check = await confirmationDeleteReturn("Deseja realmente excluir este registro!");
     if (check) {
       await del({ endPoint: endPoint, id: id });
-
       getList();
       toast.success("Registro excluído com sucesso!");
     }
@@ -57,25 +66,30 @@ export default function Table({ fields, endPoint }: ITable) {
     setId(id)
   }
   return (
-    <T className="w-full mt-2 table">
-      <thead>
-        {fields?.map((i) => (
-          <th className="text-zinc-500 text-left" key={i.head}>{i.head}</th>
-        ))}
-        <th className="text-zinc-500 float-right mr-8">Ações</th>
-      </thead>
-      <tbody className="p-2">
-        {data &&
-          data.map((item: any, index) => (
-            <tr key={index}>
-              {fields?.map((i) => (
-                <td key={i.body}>
-                  {item[i.body]}
-                </td>
-              ))}
-              <div className="flex float-right gap-2 items-center">
-                <ToolTip
-                  element={
+    <>
+      <If test={loading}>
+        <div className="m-11">
+          <Skeleton className="w-full h-[20px] rounded-full" />
+        </div>
+      </If>
+      <If test={!loading}>
+        <T className="w-full mt-2 table">
+          <thead>
+            {fields?.map((i) => (
+              <th className="text-zinc-500 text-left" key={i.head}>{i.head}</th>
+            ))}
+            <th className="text-zinc-500 float-right mr-8">Ações</th>
+          </thead>
+          <tbody className="p-2">
+            {data &&
+              data.map((item: any, index) => (
+                <tr key={index}>
+                  {fields?.map((i) => (
+                    <td key={i.body}>
+                      {item[i.body]}
+                    </td>
+                  ))}
+                  <div className="flex float-right gap-2 items-center">
                     <td
                       className="bg-primary m-1"
                       style={{
@@ -87,21 +101,23 @@ export default function Table({ fields, endPoint }: ITable) {
                         borderRadius: "50%",
                       }}
                     >
-                      <Pencil
-                        color="#fff"
-                        className="cursor-pointer"
-                        size={20}
-                        onClick={() => {
-                          setView("edit");
-                          handleId(item.id);
-                        }}
-                      />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger> <Pencil
+                            color="#fff"
+                            className="cursor-pointer"
+                            size={20}
+                            onClick={() => {
+                              setView("edit");
+                              handleId(item.id);
+                            }}
+                          /></TooltipTrigger>
+                          <TooltipContent>
+                            <p>Editar</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </td>
-                  }
-                  description="Editar"
-                />
-                <ToolTip
-                  element={
                     <td
                       className="bg-red-500 m-1"
                       style={{
@@ -113,21 +129,37 @@ export default function Table({ fields, endPoint }: ITable) {
                         borderRadius: "50%",
                       }}
                     >
-                      <Trash
-                        color="#fff"
-                        className="cursor-pointer"
-                        size={20}
-                        onClick={() => {
-                          remove(item.id)
-                        }}
-                      />
-                    </td>}
-                  description="Excluir"
-                />
-              </div>
-            </tr>
-          ))}
-      </tbody>
-    </T>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Trash
+                              color="#fff"
+                              className="cursor-pointer"
+                              size={20}
+                              onClick={() => {
+                                remove(item.id)
+                              }}
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Excluir</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+
+                    </td>
+
+                  </div>
+                </tr>
+              ))}
+          </tbody>
+
+        </T>
+      </If>
+    </>
+
+
+
+
   );
 }
