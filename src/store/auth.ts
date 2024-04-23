@@ -1,7 +1,7 @@
 import { TOKEN_WEB } from '@/constraint/web';
 import { api } from '@/services/api';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { error as msgError } from 'message-next';
 
 export interface User {
@@ -48,7 +48,12 @@ export interface AuthState {
   onLogin: (login : string, senha: string) => Promise<void>;
 }
 
-const isAuthenticated = () => localStorage.getItem(TOKEN_WEB) !== null;
+const isAuthenticated = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(TOKEN_WEB) !== null;
+  }
+  return false; // Return false if localStorage is not available
+};
 
 export const useAuth = create(persist<AuthState>(
   set => ({
@@ -102,6 +107,6 @@ export const useAuth = create(persist<AuthState>(
   }),
   {
     name: 'zustand-auth',
-    getStorage: () => localStorage
+    storage: createJSONStorage(() => localStorage),
   }
 ))

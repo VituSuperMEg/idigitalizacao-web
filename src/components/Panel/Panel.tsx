@@ -17,8 +17,7 @@ import CredoresPage from "@/pages/Credores";
 import './panel.css';
 import MainInfo from "./components/MainInfo";
 import { useAuth } from "@/store/auth";
-import { TOKEN_WEB } from "@/constraint/web";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 
 const pages: any = {
@@ -36,21 +35,18 @@ export function Panel() {
   const [pagesMenu, setPagesMenu] = useState<string[]>([]);
 
   const handleCapturePageChange = (selectedPage: string) => {
-    setPage(selectedPage);
-    if (!pagesMenu.includes(selectedPage)) {
-      if (pagesMenu.length > 6) {
-        alert("ta bom homi!")
-        return false;
-      }
-      setPagesMenu(prevState => [...prevState, selectedPage]);
+    if (pagesMenu.length >= 6) {
+      return false;
     }
+    setPagesMenu(prevState => [...prevState, selectedPage]);
+    setPage(selectedPage);
   };
 
   const removePageMenu = (pageToRemove: string) => {
     const updatedPages = pagesMenu.filter(page => page !== pageToRemove);
-    const newPage = updatedPages[updatedPages.length - 1];
     setPagesMenu(updatedPages);
-    setPage(newPage);
+    const lastPage = updatedPages.length > 0 ? updatedPages[updatedPages.length - 1] : "";
+    setPage(lastPage);
   };
 
   const client = useAuth(state => state.client);
@@ -58,8 +54,7 @@ export function Panel() {
   const isAuthenticated = useAuth(state => state.isAuthenticated);
 
   useEffect(() => {
-    console.log(isAuthenticated)
-    if(isAuthenticated === false) {
+    if (isAuthenticated === false) {
       router.push(`/login/${client.cod_ibge}`);
       toast.error("Sua sessão expirou. Por favor, faça login novamente.", {
         onClose: () => {
@@ -79,10 +74,11 @@ export function Panel() {
           <MainInfo />
           <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu} />
           <div className="mt-16">
-            {pages[page]}
+            {pages[page] || ""}
           </div>
         </div>
       </div>
     </div>
   );
 }
+

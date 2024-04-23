@@ -1,10 +1,13 @@
+"use client";
+
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import Select from '@/components/Form/Select';
 import { useAuth } from '@/store/auth';
 import { getCidades, getDB, getEntidades, getEstados } from '@/providers/providers';
 import { MailBox } from 'solar-icons-react';
 
+
+import Select from '@/components/Form/Select';
 interface Entidade {
   label: string;
   value: string;
@@ -56,6 +59,7 @@ export default function Entidades() {
     }
     obterEntidade();
   }, [client.entidade, setEntidade]);
+
 
   return (
     <div className="centralizer bg-white p-20 rounded-lg">

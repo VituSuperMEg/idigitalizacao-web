@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { ArrowRight, ChevronRight, Home, HomeIcon } from "lucide-react";
 import { If } from 'if-component-ts';
 import Table from "./Table";
@@ -9,6 +9,7 @@ import { useCrud } from "@/store/crud";
 import Pagination from "./Pag";
 import Form from "./Form";
 import { BreadcrumbComponent } from "./BreadCrumb";
+import { FieldValues, RegisterOptions, UseFormRegisterReturn, UseFormSetValue } from "react-hook-form";
 
 interface ICrud {
   display: {
@@ -16,12 +17,13 @@ interface ICrud {
     displayMenu: string;
   }
   fieldsTable: { head: string, body: string }[];
-  form: ReactNode;
+  form: (errors: any, register: (name: string, options?: RegisterOptions) => UseFormRegisterReturn, setValue: UseFormSetValue<FieldValues>, control: any) => ReactNode;
   endPoint: string;
   Type?: any;
   Schema?: any;
-  onSubmit?: (values : any) => void;
+  onSubmit: (values: any) => void;
 }
+
 export default function Crud({
   display,
   fieldsTable,
@@ -49,15 +51,19 @@ export default function Crud({
             fields={fieldsTable}
             endPoint={endPoint}
           />
-          <Pagination  />
+          <Pagination />
         </div>
       </If>
-      <If test={view === "new"}>
-        {/* <Form form={form} onSubmit={onSubmit}  Schema={Schema} Type={Type}/> */}
-        {form}
-      </If>
-      <If test={view === "edit"}>
-       {form}
+      <If test={view === "new" || view === "edit"}>
+        {typeof form === 'function' && (
+          <Form
+            form={(errors, register, setValue, control) => form(errors, register, setValue, control)}
+            onSubmit={onSubmit}
+            Schema={Schema}
+            Type={Type}
+            endPoint={endPoint}
+          />
+        )}
       </If>
     </div>
   )

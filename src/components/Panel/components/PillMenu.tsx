@@ -13,7 +13,6 @@ export default function PillMenu({
   setPage,
   onRemovePage
 }: IPillMenu) {
-
   return (
     <div className="pill">
       <div className="bg-white shadow-lg p-3 rounded-md" onClick={() => setPage(false)}>
