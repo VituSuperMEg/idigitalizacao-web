@@ -10,6 +10,7 @@ import Pagination from "./Pag";
 import Form from "./Form";
 import { BreadcrumbComponent } from "./BreadCrumb";
 import { FieldValues, RegisterOptions, UseFormRegisterReturn, UseFormSetValue } from "react-hook-form";
+import { IButton } from "../Form/ButtonsCrud";
 
 interface ICrud {
   display: {
@@ -21,7 +22,7 @@ interface ICrud {
   endPoint: string;
   Type?: any;
   Schema?: any;
-  onSubmit: (values: any) => void;
+  buttons : IButton
 }
 
 export default function Crud({
@@ -29,9 +30,9 @@ export default function Crud({
   fieldsTable,
   form,
   endPoint,
-  onSubmit,
   Schema,
-  Type
+  Type,
+  buttons
 }: ICrud) {
   const view = useCrud(state => state.view);
 
@@ -58,10 +59,10 @@ export default function Crud({
         {typeof form === 'function' && (
           <Form
             form={(errors, register, setValue, control) => form(errors, register, setValue, control)}
-            onSubmit={onSubmit}
             Schema={Schema}
             Type={Type}
             endPoint={endPoint}
+            buttons={buttons}
           />
         )}
       </If>

@@ -98,10 +98,13 @@ export default function Setor() {
         { head: "Código", body: "id" },
         { head: "Descrição", body: "descricao" },
       ]}
-      onSubmit={() => {}}
       Schema={SetorSchema}
       Type={Setor}
       form={renderForm}
+      buttons={{
+        btnNew: true,
+        btnDel: true
+      }}
     />
   )
 }

@@ -2,25 +2,25 @@
 import { ReactNode, useEffect } from "react";
 import { FieldValues, RegisterOptions, UseFormRegisterReturn, UseFormSetValue, useForm } from "react-hook-form";
 import { error } from 'message-next';
-import { api } from "@/services/api";
+import { api, submit } from "@/services/api";
 import { useCrud } from "@/store/crud";
-import { ButtonsCrud } from "../Form/ButtonsCrud";
+import { ButtonsCrud, IButton } from "../Form/ButtonsCrud";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IForm {
   form: (errors: any, register: (name: string, options?: RegisterOptions) => UseFormRegisterReturn, setValue: UseFormSetValue<FieldValues>, control: any) => ReactNode;
   Type: any;
   Schema: any;
-  onSubmit: (values: any) => void;
   endPoint: string;
+  buttons : IButton
 }
 
 export default function Form({
   form,
   Type,
   Schema,
-  onSubmit,
-  endPoint
+  endPoint,
+  buttons
 }: IForm) {
   const {
     register,
@@ -49,6 +49,22 @@ export default function Form({
     }
   }
 
+  async function onSubmit(values: any) {
+    if (view === "new") {
+      await submit({
+        endPoint: `/${endPoint}`, values
+      });
+    } else {
+      await submit({
+        endPoint: `/${endPoint}/update`,
+        values: {
+          id: id,
+          ...values
+        }
+      });
+    }
+  }
+
   useEffect(() => {
     if (view === "edit") {
       fillFormFields();
@@ -58,7 +74,10 @@ export default function Form({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
       {form(errors, register, setValue, control)}
-      <ButtonsCrud btnNew={false} />
+      <ButtonsCrud
+      btnNew={buttons.btnNew}
+      btnDel={buttons.btnDel}
+      />
     </form>
   )
 }
