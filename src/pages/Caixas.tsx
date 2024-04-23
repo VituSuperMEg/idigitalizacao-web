@@ -15,71 +15,18 @@ const CaixasSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
 });
 
-function Form() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm<Caixas>({
-    resolver: zodResolver(CaixasSchema)
-  });
-
-  const id = useCrud(state => state.id);
-  const view = useCrud(state => state.view);
-
-
-  async function fillFormFields(id: number, setValue: any, api: any) {
-    try {
-      const response = await api.get(`/caixas/${id}`);
-      const data = response.data.data[0];
-  
-      // Mapear manualmente as chaves
-      const keys: (keyof Caixas)[] = ['descricao'];
-  
-      keys.forEach((key: keyof Caixas) => {
-        setValue(key, data[key]);
-      });
-    } catch (error) {
-      console.error("Erro ao preencher os campos do formulário:", error);
-    }
-  }
-
-  useEffect(() => {
-    if (view === "edit") {
-      // Chame a função dentro do useEffect
-      fillFormFields(id, setValue, api);
-    }
-  }, [view, id, setValue, api]);
-
-
-  async function onSubmit(values: any) {
-    if(view === "new") {
-      await submit({
-        endPoint: "/caixas", values: {
-          descricao: values.descricao,
-        }
-      });
-    }else{
-      await submit({
-        endPoint: "/caixas/update", values: {
-          id : id,
-          descricao: values.descricao,
-        }
-      });
-    }
-  }
+const renderForm = (errors: any, register: any, setValue: any, control: any) => {
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
-      <label>
+    <>
+     <label>
         Descrição
         <input type="text" className="border rounded-md p-3 w-full outline-none" {...register("descricao")} />
         {errors.descricao && <p className="text-red-500">{errors.descricao.message}</p>}
-      </label> 
-      <ButtonsCrud btnNew={false} />
-    </form>
-  )
-}
+      </label>
+    </>
+  );
+};
+
 
 export default function Caixas() {
   return (
@@ -90,7 +37,13 @@ export default function Caixas() {
         { head: "Código", body: "id" },
         { head: "Descrição", body: "descricao" },
       ]}
-      form={<Form />}
+      Schema={CaixasSchema}
+      Type={Caixas}
+      form={renderForm}
+      buttons={{
+        btnDel: true,
+        btnNew: true,
+      }}
     />
   )
 }

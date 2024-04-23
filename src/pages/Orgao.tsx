@@ -1,14 +1,15 @@
 import Crud from "@/components/Crud/Crud";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ButtonsCrud } from "@/components/Form/ButtonsCrud";
-import { api, submit } from "@/services/api";
-import { useEffect, useState } from "react";
-import { useCrud } from "@/store/crud";
 import { Input } from "@/components/Form/Input";
 
 
+type OrgaoType = {
+  descricao: string;
+  responsavel: string;
+  cpf: string;
+  num_expediente: string;
+  cod_setor: string;
+}
 
 
 const OrgaoSchema = z.object({
@@ -19,62 +20,9 @@ const OrgaoSchema = z.object({
 });
 
 
-function Form() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    control,
-    formState: { errors }
-  } = useForm<Orgao>({
-    resolver: zodResolver(OrgaoSchema)
-  });
-
-  const id = useCrud(state => state.id);
-  const view = useCrud(state => state.view);
-
-  async function fillFormFields() {
-    try {
-      const response = await api.get(`/orgaos/${id}`);
-      const data = response.data.data[0];
-      const keys: (keyof Orgao)[] = ['descricao'];
-  
-      keys.forEach((key: keyof Orgao) => {
-        setValue(key, data[key]);
-      });
-    } catch (error) {
-      console.error("Erro ao preencher os campos do formulário:", error);
-    }
-  }
-
-  useEffect(() => {
-    if (view === "edit") {
-     
-      fillFormFields();
-    }
-  }, [view]);
-
-  async function onSubmit(values: any) {
-    if (view === "new") {
-      await submit({
-        endPoint: "/orgaos", values: {
-          descricao: values.descricao,
-          responsavel: values.responsavel,
-          cpf: values.cpf,
-          num_expediente: values.num_expediente
-        }
-      });
-    } else {
-      await submit({
-        endPoint: "/orgaos/update", values: {
-          id: id,
-          descricao: values.descricao,
-        }
-      });
-    }
-  }
+const renderForm = (errors: any, register: any, setValue: any, control: any) => {
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col mt-2">
+    <>
       <Input
         label="Descrição"
         required
@@ -99,22 +47,20 @@ function Form() {
           errors={errors.cpf && <p className="text-red-500">{errors.cpf.message}</p>}
         />
       </div>
-     
-      <ButtonsCrud btnNew />
-    </form>
-  )
-}
-type Orgao = {
-  descricao: string;
-  responsavel: string;
-  cpf: string;
-  num_expediente: string;
-  cod_setor: string;
-}
+    </>
+  );
+};
 
 export default function OrgaoPage() {
+  const initialOrgao: OrgaoType = {
+    descricao: "",
+    responsavel: "",
+    cpf: "",
+    num_expediente: "",
+    cod_setor: ""
+  };
+
   return (
-    <div>
       <Crud
         Schema={OrgaoSchema}
         display={{ displayName: "Orgão", displayMenu: "Cadastro" }}
@@ -125,8 +71,12 @@ export default function OrgaoPage() {
           { head: "Responsável", body: "responsavel" },
           { head: "CPF", body: "cpf" }
         ]}
-        form={<Form />}
+        form={renderForm}
+        Type={initialOrgao}
+        buttons={{
+          btnDel : true,
+          btnNew : true,
+        }}
       />
-    </div>
   )
 }
