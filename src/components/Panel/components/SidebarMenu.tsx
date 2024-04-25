@@ -21,7 +21,7 @@ export function SidebarMenu({
           {/* Cadastro */}
           <Accordion.Item className="w-ful" value="item-1">
             <Accordion.Trigger className='w-full flex gap-2  items-center hover:bg-stone-200 rounded-lg p-2'><Plus size={20} /> Cadastro</Accordion.Trigger>
-            <Accordion.Content>
+            <Accordion.Content>z
               <div className='flex flex-col ml-2'>
                 <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Orgão")}>Orgão</p>
                 <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Setor")}>Setor</p>
@@ -35,7 +35,7 @@ export function SidebarMenu({
           </Accordion.Item>
           {/*  Documentos */}
           <Accordion.Item className="w-ful" value="item-2">
-            <Accordion.Trigger className='w-full flex items-center gap-2 hover:bg-stone-200 rounded-lg p-2'><Document size={20} /> Documentos</Accordion.Trigger>
+            <Accordion.Trigger className='w-full flex items-center gap-2 hover:bg-stone-200 rounded-lg p-2' onClick={() => onCapturePageChange("Documentos")}><Document size={20} /> Documentos</Accordion.Trigger>
           </Accordion.Item>
 
 

@@ -19,6 +19,7 @@ import MainInfo from "./components/MainInfo";
 import { useAuth } from "@/store/auth";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
+import DocumentosPages from "@/pages/documentos/Documentos";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
@@ -27,7 +28,8 @@ const pages: any = {
   Salas: <SalasPage />,
   Caixas: <CaixasPage />,
   Estantes: <EstantesPage />,
-  Credores: <CredoresPage />
+  Credores: <CredoresPage />,
+  Documentos : <DocumentosPages />
 };
 
 export function Panel() {

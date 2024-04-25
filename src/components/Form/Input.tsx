@@ -7,7 +7,7 @@ interface IInput<T extends FieldValues> extends HTMLAttributes<HTMLInputElement>
   control: Control<T>;
   mask?: any;
   label: string;
-  errors: ReactNode;
+  errors?: ReactNode;
   className?: any;
   required?: boolean;
   type?: string;
