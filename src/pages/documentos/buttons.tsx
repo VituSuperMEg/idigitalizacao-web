@@ -51,11 +51,30 @@ const F3 = ({
               />
             </If>
             <If test={option === "criterio"}>
-              <div className="mt-2">
+              <div className="mt-2 flex flex-col gap-2">
               <AsyncFilter
                placeholder="Digite o Código ou Descrição do tipo de Documento..."
                required
                label="Tipo de Documento"
+               path="tipos-documentos"
+              />
+              <AsyncFilter
+               placeholder="Digite o Código ou Descrição do tipo de Documento..."
+               required
+               label="Órgão"
+               path="tipos-documentos"
+              />
+              <AsyncFilter
+               placeholder="Digite o Código ou Descrição do tipo de Documento..."
+               required
+               label="Setor"
+               path="tipos-documentos"
+              />
+              <AsyncFilter
+               placeholder="Digite o Código ou Descrição do tipo de Documento..."
+               required
+               label="Credor"
+               path="tipos-documentos"
               />
               </div>
             </If>
