@@ -19,7 +19,9 @@ import MainInfo from "./components/MainInfo";
 import { useAuth } from "@/store/auth";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
+
 import DocumentosPages from "@/pages/documentos/Documentos";
+import ConfigPage from "@/pages/Utilitarios/Config";
 
 const pages: any = {
   Orgão: <OrgaoPage />,
@@ -29,7 +31,8 @@ const pages: any = {
   Caixas: <CaixasPage />,
   Estantes: <EstantesPage />,
   Credores: <CredoresPage />,
-  Documentos : <DocumentosPages />
+  Documentos : <DocumentosPages />,
+  Config : <ConfigPage />
 };
 
 export function Panel() {
@@ -67,7 +70,7 @@ export function Panel() {
   }, [isAuthenticated, router, client.cod_ibge]);
 
   return (
-    <div className="h-screen flex">
+    <div className="h-auto flex">
       <SidebarMenu onCapturePageChange={handleCapturePageChange} />
       <div className="w-screen flex items-center justify-center bg-slate-100 mt-12">
         <div className={`w-full m-4 ${page && "bg-white"} rounded-xl p-10`} style={{
@@ -75,7 +78,7 @@ export function Panel() {
         }}>
           <MainInfo />
           <PillMenu selectedPage={page} pages={pagesMenu} setPage={setPage} onRemovePage={removePageMenu} />
-          <div className="mt-16">
+          <div className="mt-16 h-auto">
             {pages[page] || ""}
           </div>
         </div>

@@ -9,6 +9,7 @@ interface AsyncTypeahead {
   label?: string;
   required?: boolean;
   path: string;
+  className : string;
 }
 
 const RenderList = (item: any) => {
@@ -40,8 +41,8 @@ export const AsyncFilter = ({
   placeholder,
   label,
   required,
-  path
-
+  path,
+  className
 }: AsyncTypeahead) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -62,7 +63,7 @@ export const AsyncFilter = ({
       </Label>
       <AsyncTypeahead
         clearButton
-        className="async-typeahead"
+        className={`async-typeahead ${className}`}
         filterBy={filterBy}
         isLoading={isLoading}
         promptText={<LoadingType />}

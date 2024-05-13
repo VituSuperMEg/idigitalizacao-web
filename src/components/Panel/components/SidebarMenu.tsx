@@ -14,7 +14,7 @@ export function SidebarMenu({
   onCapturePageChange
 }: ISidebarMenu) {
   return (
-    <ul className="bg-white w-44 flex flex-col p-2 justify-between m-4 rounded-lg">
+    <ul className="bg-white w-44 flex flex-col p-2 justify-between m-4 rounded-lg h-[800px]">
       <div>
        <p className='flex gap-4 items-center'><MailBox size={20}/> {""} Idigitalizacao</p>
         <Accordion.Root type="multiple" className='mt-16'>
@@ -55,7 +55,7 @@ export function SidebarMenu({
             <Accordion.Trigger className='w-full flex items-center gap-2 hover:bg-stone-200 rounded-lg p-2'><Set size={20} /> Utilitários</Accordion.Trigger>
             <Accordion.Content>
               <div className='flex flex-col ml-2'>
-                <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("config")}>Configurações</p>
+                <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("Config")}>Configurações</p>
                 <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("exportar")}>Exportar</p>
                 <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("producao")}>Produção</p>
                 <p className='hover:bg-stone-200 rounded-lg p-2 cursor-pointer' onClick={() => onCapturePageChange("importar-docs")}>Importar Documentos</p>

@@ -11,14 +11,12 @@ type OrgaoType = {
   cod_setor: string;
 }
 
-
 const OrgaoSchema = z.object({
   descricao: z.string().nonempty("a descrição é obrigatória").min(3, { message: "A descrição deve ter pelo menos 3 caracteres." }),
   responsavel: z.string().nonempty("o responsável é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }),
   cpf: z.string().nonempty("o cpf é obrigatório").min(1, { message: "O responsável deve ter pelo 1 caracteres" }).max(11, { message: "o maximo é 11 cararecteres" }),
   num_expediente : z.number()
 });
-
 
 const renderForm = (errors: any, register: any, setValue: any, control: any) => {
   return (
